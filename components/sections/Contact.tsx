@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { site } from "@/lib/site";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { IconEmail, IconGitHub, IconLinkedIn } from "@/components/ui/Icons";
@@ -19,7 +18,7 @@ export function Contact() {
           <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-400">
             05 — Contact
           </p>
-          <h2 className="mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+          <h2 className="section-heading mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
             Get in touch
           </h2>
           <p className="mt-5 max-w-xl text-zinc-600 dark:text-zinc-400">
@@ -27,38 +26,32 @@ export function Contact() {
           </p>
           <ul className="mt-8 flex flex-wrap gap-4" role="list">
             <li>
-              <motion.a
+              <a
                 href={site.links.email}
-                className={linkClass}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className={`${linkClass} transition-[transform] duration-200 hover:scale-[1.02] active:scale-[0.98]`}
               >
                 <IconEmail /> Email
-              </motion.a>
+              </a>
             </li>
             <li>
-              <motion.a
+              <a
                 href={site.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className={`${linkClass} transition-[transform] duration-200 hover:scale-[1.02] active:scale-[0.98]`}
               >
                 <IconGitHub /> GitHub
-              </motion.a>
+              </a>
             </li>
             <li>
-              <motion.a
+              <a
                 href={site.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className={`${linkClass} transition-[transform] duration-200 hover:scale-[1.02] active:scale-[0.98]`}
               >
                 <IconLinkedIn /> LinkedIn
-              </motion.a>
+              </a>
             </li>
           </ul>
         </div>

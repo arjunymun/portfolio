@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { IconEmail, IconGitHub, IconLinkedIn } from "@/components/ui/Icons";
 
 export function Footer() {
   return (
@@ -9,28 +10,28 @@ export function Footer() {
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
             © {new Date().getFullYear()} {site.ownerName}. All rights reserved.
           </p>
-          <div className="flex gap-8">
+          <div className="flex gap-6">
             <a
               href={site.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
+              className="flex items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
             >
-              GitHub
+              <IconGitHub /> GitHub
             </a>
             <a
               href={site.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
+              className="flex items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
             >
-              LinkedIn
+              <IconLinkedIn /> LinkedIn
             </a>
             <a
               href={site.links.email}
-              className="text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
+              className="flex items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-teal-600 dark:text-zinc-400 dark:hover:text-teal-400"
             >
-              Email
+              <IconEmail /> Email
             </a>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { experience } from "@/lib/content";
 import { SectionReveal } from "@/components/ui/SectionReveal";
@@ -21,18 +21,22 @@ const listItem = {
 export function Experience() {
   const ref = useRef<HTMLUListElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.05 });
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+  useEffect(() => {
+    if (inView) setHasBeenVisible(true);
+  }, [inView]);
 
   return (
     <SectionReveal delay={50}>
       <section
         id="experience"
-        className="scroll-mt-16 border-b border-zinc-200 bg-zinc-100/50 dark:border-zinc-800 dark:bg-zinc-900/30"
+        className="section-orb relative scroll-mt-16 border-b border-zinc-200 bg-zinc-100/60 dark:border-zinc-800 dark:bg-zinc-900/40"
       >
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 py-20">
           <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-400">
             04 — Experience
           </p>
-          <h2 className="mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+          <h2 className="section-heading mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
             Where I&apos;ve worked
           </h2>
           <motion.ul
@@ -40,7 +44,7 @@ export function Experience() {
             className="mt-10 space-y-10"
             variants={list}
             initial="hidden"
-            animate={inView ? "visible" : "hidden"}
+            animate={hasBeenVisible ? "visible" : "hidden"}
           >
             {experience.map((job) => (
               <motion.li

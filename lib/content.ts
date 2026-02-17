@@ -14,18 +14,24 @@ export const skills: SkillGroup[] = [
 export interface Project {
   title: string;
   description: string;
+  /** Short outcome or result (e.g. "Reduced load time by 40%") */
+  outcome?: string;
   liveUrl?: string;
   repoUrl?: string;
   tags: string[];
+  /** First featured project can span full width */
+  featured?: boolean;
 }
 
 export const projects: Project[] = [
   {
     title: "Project One",
     description: "A short description of your project and what it does.",
+    outcome: "Shipped to 10k+ users.",
     liveUrl: "https://example.com",
     repoUrl: "https://github.com/your-username/repo",
     tags: ["Next.js", "TypeScript"],
+    featured: true,
   },
 ];
 

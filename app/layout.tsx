@@ -33,6 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <noscript>
+        <style>{`.section-reveal { opacity: 1 !important; transform: none !important; }`}</style>
+      </noscript>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} min-h-screen antialiased`}
       >

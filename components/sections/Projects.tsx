@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { projects } from "@/lib/content";
 import { SectionReveal } from "@/components/ui/SectionReveal";
@@ -21,6 +21,10 @@ const listItem = {
 export function Projects() {
   const ref = useRef<HTMLUListElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.05 });
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+  useEffect(() => {
+    if (inView) setHasBeenVisible(true);
+  }, [inView]);
 
   return (
     <SectionReveal delay={100}>
@@ -32,7 +36,7 @@ export function Projects() {
           <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-400">
             03 — Work
           </p>
-          <h2 className="mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+          <h2 className="section-heading mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
             Projects
           </h2>
           <motion.ul
@@ -40,15 +44,14 @@ export function Projects() {
             className="mt-10 grid gap-6 sm:grid-cols-2"
             variants={list}
             initial="hidden"
-            animate={inView ? "visible" : "hidden"}
+            animate={hasBeenVisible ? "visible" : "hidden"}
           >
             {projects.map((project) => (
               <motion.li
                 key={project.title}
                 variants={listItem}
                 transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className={`group flex flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-teal-200 hover:shadow-md hover:shadow-teal-500/5 dark:border-zinc-700 dark:bg-zinc-900/50 dark:hover:border-teal-500/30 dark:hover:shadow-teal-500/5 ${project.featured ? "sm:col-span-2 sm:p-8" : ""}`}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className={`group flex flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg hover:shadow-teal-500/10 dark:border-zinc-700 dark:bg-zinc-900/50 dark:hover:border-teal-500/30 dark:hover:shadow-teal-500/10 ${project.featured ? "sm:col-span-2 sm:p-8" : ""}`}
               >
                 {project.featured && (
                     <span className="mb-3 inline-block font-mono text-xs font-medium uppercase tracking-widest text-teal-600 dark:text-teal-400">
