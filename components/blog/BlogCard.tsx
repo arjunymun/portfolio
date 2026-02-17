@@ -8,12 +8,9 @@ interface BlogCardProps {
 
 export function BlogCard({ slug, meta }: BlogCardProps) {
   return (
-    <article className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-teal-200 hover:shadow-md hover:shadow-teal-500/5 dark:border-zinc-700 dark:bg-zinc-900/50 dark:hover:border-teal-500/30 dark:hover:shadow-teal-500/5">
+    <article className="card">
       <h3 className="font-[family-name:var(--font-outfit)] font-semibold text-zinc-900 dark:text-zinc-100">
-        <Link
-          href={`/blog/${slug}`}
-          className="hover:text-teal-600 dark:hover:text-teal-400"
-        >
+        <Link href={`/blog/${slug}`} className="muted-link">
           {meta.title}
         </Link>
       </h3>

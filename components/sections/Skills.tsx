@@ -30,32 +30,32 @@ export function Skills() {
     <SectionReveal delay={50}>
       <section
         id="skills"
-        className="section-orb relative scroll-mt-16 border-b border-zinc-200 bg-zinc-100/60 dark:border-zinc-800 dark:bg-zinc-900/40"
+        className="section-orb relative scroll-mt-16 border-b border-stone-200/80 bg-stone-100/80 dark:border-stone-800/80 dark:bg-stone-900/30"
       >
-        <div className="relative z-10 mx-auto max-w-4xl px-4 py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-400">
+        <div className="relative z-10 mx-auto max-w-5xl px-6 py-24 sm:px-10 lg:px-14">
+          <p className="section-label text-stone-500 dark:text-stone-500">
             02 — Skills
           </p>
-          <h2 className="section-heading mt-3 font-[family-name:var(--font-outfit)] text-2xl font-semibold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+          <h2 className="section-heading section-title mt-2 text-3xl font-bold text-stone-900 dark:text-stone-100 sm:text-4xl">
             Tech & tools
           </h2>
           <motion.div
             ref={ref}
-            className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3"
             variants={container}
             initial="hidden"
             animate={hasBeenVisible ? "visible" : "hidden"}
           >
             {skills.map((group) => (
               <motion.div key={group.title} variants={item}>
-                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-500 dark:text-stone-400">
                   {group.title}
                 </h3>
-                <ul className="mt-3 flex flex-wrap gap-2">
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {group.items.map((skill) => (
                     <li
                       key={skill}
-                      className="rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium text-zinc-800 shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:scale-[1.02] hover:border-teal-200 hover:shadow hover:shadow-teal-500/10 dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-200 dark:hover:border-teal-500/30"
+                      className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-800 shadow-sm dark:border-stone-700 dark:bg-stone-800/50 dark:text-stone-200"
                     >
                       {skill}
                     </li>

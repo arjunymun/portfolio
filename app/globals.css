@@ -1,31 +1,34 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Warm, editorial color system – not default gray/teal */
 :root {
-  --background: #fafafa;
-  --foreground: #18181b;
+  --background: #faf9f7;
+  --foreground: #1a1816;
   --accent: #0d9488;
-  --accent-foreground: #ffffff;
-  --muted: #71717a;
-  --muted-bg: #f4f4f5;
+  --accent-soft: #ccfbf1;
+  --muted: #57534e;
+  --muted-bg: #f5f5f4;
   --card: #ffffff;
-  --card-border: #e4e4e7;
-  --gradient-orb-1: radial-gradient(ellipse 80% 50% at 70% -20%, rgba(20, 184, 166, 0.15), transparent);
-  --gradient-orb-2: radial-gradient(ellipse 60% 40% at 20% 100%, rgba(20, 184, 166, 0.12), transparent);
+  --card-border: #e7e5e4;
+  --section-num: #a8a29e;
+  --gradient-orb-1: radial-gradient(ellipse 70% 60% at 80% 20%, rgba(20, 184, 166, 0.12), transparent 50%);
+  --gradient-orb-2: radial-gradient(ellipse 50% 50% at 10% 80%, rgba(20, 184, 166, 0.08), transparent 50%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #09090b;
-    --foreground: #fafafa;
+    --background: #0c0b0a;
+    --foreground: #faf9f7;
     --accent: #2dd4bf;
-    --accent-foreground: #0f172a;
-    --muted: #a1a1aa;
-    --muted-bg: #18181b;
-    --card: #18181b;
-    --card-border: #27272a;
-    --gradient-orb-1: radial-gradient(ellipse 80% 50% at 70% -20%, rgba(45, 212, 191, 0.12), transparent);
-    --gradient-orb-2: radial-gradient(ellipse 60% 40% at 20% 100%, rgba(45, 212, 191, 0.08), transparent);
+    --accent-soft: #134e4a;
+    --muted: #a8a29e;
+    --muted-bg: #1c1917;
+    --card: #1c1917;
+    --card-border: #292524;
+    --section-num: #57534e;
+    --gradient-orb-1: radial-gradient(ellipse 70% 60% at 80% 20%, rgba(45, 212, 191, 0.1), transparent 50%);
+    --gradient-orb-2: radial-gradient(ellipse 50% 50% at 10% 80%, rgba(45, 212, 191, 0.06), transparent 50%);
   }
 }
 
@@ -33,9 +36,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-outfit);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-syne);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -46,10 +48,28 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01" 1, "ss02" 1;
 }
 
-/* Section heading accent line */
+/* Section: big number + title block (editorial) */
+.section-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--section-num);
+}
+
+.section-title {
+  font-family: var(--font-syne), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+/* Accent bar for section titles (optional) */
 .section-heading {
   position: relative;
   padding-left: 1rem;
@@ -58,20 +78,14 @@ body {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.35em;
-  bottom: 0.35em;
-  width: 3px;
+  top: 0.25em;
+  bottom: 0.25em;
+  width: 4px;
   border-radius: 2px;
-  background: linear-gradient(to bottom, var(--accent), #5eead4);
-}
-.dark .section-heading::before {
-  background: linear-gradient(to bottom, var(--accent), #99f6e4);
+  background: var(--accent);
 }
 
-/* Gradient orbs for section backgrounds */
-.section-orb {
-  position: relative;
-}
+/* Gradient orbs */
 .section-orb::before {
   content: "";
   position: absolute;
@@ -87,52 +101,45 @@ body {
   pointer-events: none;
 }
 
-/* Subtle grid pattern for hero */
+/* Hero: stronger grid */
 .hero-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.dark .hero-pattern {
   background-image:
     linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size: 56px 56px;
 }
 
-.dark .hero-pattern {
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+/* Floating orb animation for hero decorative elements */
+@keyframes orbFloat {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-18px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+.orb-float { animation: orbFloat 8s ease-in-out infinite; }
+.orb-float-slow { animation: orbFloat 14s ease-in-out infinite; }
+
+/* Hero heading gradient accent */
+.hero-title-accent {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 60%, transparent), rgba(255,255,255,0));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Scroll reveal - legacy fallback */
-.section-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.section-reveal.transition-both {
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.section-reveal--in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .section-reveal {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Subtle grain overlay */
 .grain {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.35;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.dark .grain {
-  opacity: 0.25;
-}
+.dark .grain { opacity: 0.2; }
 
-/* Scroll indicator (dot) */
 .scroll-indicator {
   width: 6px;
   height: 6px;
@@ -143,4 +150,70 @@ body {
 @keyframes scroll-bounce {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50% { transform: translateY(6px); opacity: 0.6; }
+}
+
+/* Legacy */
+.section-reveal { opacity: 0; transform: translateY(20px); }
+.section-reveal.transition-both { transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.section-reveal--in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal { opacity: 1; transform: none; }
+}
+
+/* Display font for headings (Syne) */
+.font-display {
+  font-family: var(--font-syne), system-ui, sans-serif;
+}
+
+/* Utility buttons and cards for consistent visual language */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 80% , transparent) 100%);
+  color: white;
+  box-shadow: 0 10px 30px rgba(13,148,136,0.12);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+}
+.btn:active { transform: translateY(1px); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1rem;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(16,24,40,0.06);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--card-border));
+}
+.featured-card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 6%, var(--card)) 0%, var(--card) 100%);
+  padding: 1.25rem;
+}
+
+/* Project specific */
+.project-card .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.project-card .tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 999px; background: var(--muted-bg); color: var(--muted); }
+
+/* Small polished tweaks */
+.muted-link { color: var(--muted); transition: color .14s ease; }
+.muted-link:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .btn { transition: none; }
 }
