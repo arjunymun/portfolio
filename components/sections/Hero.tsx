@@ -5,27 +5,31 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="scroll-mt-16 border-b border-zinc-200 bg-zinc-50/50 dark:border-zinc-800 dark:bg-zinc-900/30"
+      className="relative scroll-mt-16 overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-teal-900/90 dark:from-zinc-950 dark:via-zinc-900 dark:to-teal-950/80"
     >
-      <div className="mx-auto max-w-4xl px-4 py-20 sm:py-28">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl md:text-5xl">
+      <div className="hero-pattern absolute inset-0" aria-hidden />
+      <div className="relative mx-auto max-w-4xl px-4 py-24 sm:py-32">
+        <p className="font-mono text-sm uppercase tracking-widest text-teal-400/90">
+          Portfolio
+        </p>
+        <h1 className="mt-4 font-[family-name:var(--font-outfit)] text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
           Hi, I&apos;m {site.ownerName}
         </h1>
-        <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400 sm:text-xl">
+        <p className="mt-5 max-w-xl text-lg leading-relaxed text-zinc-300 sm:text-xl">
           {site.tagline}
         </p>
-        <div className="mt-8 flex flex-wrap gap-4">
+        <div className="mt-10 flex flex-wrap gap-4">
           <a
             href="#projects"
-            className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="inline-flex items-center justify-center rounded-lg bg-teal-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition hover:bg-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400"
           >
             View work
           </a>
           <Link
             href="#contact"
-            className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="inline-flex items-center justify-center rounded-lg border border-zinc-500/60 bg-zinc-800/50 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:border-teal-400/50 hover:bg-zinc-800/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400"
           >
-            Contact
+            Get in touch
           </Link>
         </div>
       </div>
