@@ -3,93 +3,85 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/lib/site";
+import { ArrowDown, ArrowRight, Mail } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#0f0e0d] dark:bg-[#080807]"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-gradient-to-b from-[#0a0908] via-[#0f0e0d] to-[#0f0e0d] dark:from-[#050504] dark:via-[#080807] dark:to-[#080807]"
     >
       <div className="hero-pattern absolute inset-0" aria-hidden />
-      <div className="grain absolute inset-0" aria-hidden />
-      {/* Decorative: large soft gradient circle */}
-      <div
-        className="absolute right-[-15%] top-1/2 h-[80vmin] w-[80vmin] -translate-y-1/2 rounded-full opacity-30 dark:opacity-20 orb-float"
-        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.35) 0%, transparent 70%)" }}
-        aria-hidden
-      />
-      <div
-        className="absolute bottom-[-20%] left-[-10%] h-[60vmin] w-[60vmin] rounded-full opacity-20 dark:opacity-15 orb-float-slow"
-        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, transparent 65%)" }}
+      <div className="grain absolute inset-0 opacity-40" aria-hidden />
+
+      <motion.div
+        className="absolute right-[-15%] top-1/2 h-[80vmin] w-[80vmin] -translate-y-1/2 rounded-full opacity-40 dark:opacity-25 blur-3xl"
+        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, transparent 70%)" }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.5, 0.4] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden
       />
 
       <motion.div
-        className="relative z-10 mx-auto w-full max-w-5xl px-6 py-24 sm:px-10 sm:py-32 lg:px-14"
-        variants={container}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.p
-          className="section-label text-white/60"
-          variants={item}
-        >
-          Portfolio
+        className="absolute bottom-[-20%] left-[-10%] h-[60vmin] w-[60vmin] rounded-full opacity-25 dark:opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.45) 0%, transparent 65%)" }}
+        animate={{ scale: [1, 1.12, 1], opacity: [0.25, 0.35, 0.25] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        aria-hidden
+      />
+
+      <motion.div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-24 sm:px-10 sm:py-32 lg:px-16" variants={container} initial="hidden" animate="visible">
+        <motion.p className="section-label text-teal-400/70 font-medium tracking-wider" variants={item}>
+          WELCOME TO MY PORTFOLIO
         </motion.p>
-        <motion.h1
-          className="font-display mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
-          variants={item}
-          style={{ letterSpacing: "-0.03em", lineHeight: 1.05 }}
-        >
+
+        <motion.h1 className="font-display mt-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl" variants={item} style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}>
           <span className="block">
-            <span className="hero-title-accent">{site.ownerName}</span>
+            <span className="hero-title-accent bg-gradient-to-r from-white via-white to-teal-400 bg-clip-text text-transparent">{site.ownerName}</span>
           </span>
-          <span className="block mt-2 text-[0.45em] font-semibold tracking-normal text-teal-400 md:text-[0.4em]">
-            {site.roleLine}
-          </span>
+          <span className="block mt-3 text-[0.4em] font-semibold tracking-tight text-teal-400 md:text-[0.35em]">{site.roleLine}</span>
         </motion.h1>
-        <motion.p
-          className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg"
-          variants={item}
-        >
+
+        <motion.p className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-300 sm:text-xl md:text-2xl" variants={item}>
           {site.tagline}
         </motion.p>
-        <motion.div
-          className="mt-12 flex flex-wrap gap-4"
-          variants={item}
-        >
-          <a href="#projects" className="btn btn-primary">
-            View work
+
+        <motion.div className="mt-14 flex flex-wrap gap-5" variants={item}>
+          <a href="#projects" className="group btn btn-primary relative overflow-hidden inline-flex items-center gap-3 px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20">
+            <span className="relative z-10">View my work</span>
+            <ArrowRight size={16} className="relative z-10" />
+            <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-teal-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </a>
-          <Link href="#contact" className="btn btn-ghost">
-            Get in touch
+
+          <Link href="#contact" className="btn btn-ghost inline-flex items-center gap-3 px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:border-teal-400/50 hover:text-teal-400">
+            <span>Get in touch</span>
+            <Mail size={16} />
           </Link>
         </motion.div>
       </motion.div>
 
-      <motion.a
-        href="#about"
-        className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/50 transition hover:text-teal-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        aria-label="Scroll to about"
-      >
-        <span className="section-label text-[0.65rem]">Scroll</span>
-        <span className="scroll-indicator" />
+      <motion.a href="#about" className="absolute bottom-12 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/40 transition-all duration-300 hover:text-teal-400" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 0.8 }} aria-label="Scroll to about section">
+        <span className="section-label text-xs font-medium tracking-widest">SCROLL</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+          <ArrowDown className="h-5 w-5" />
+        </motion.div>
       </motion.a>
     </section>
   );

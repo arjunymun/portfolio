@@ -2,8 +2,6 @@
 
 ## 1. Enhanced Hero Section (components/sections/Hero.tsx)
 
-Replace your current Hero.tsx with this improved version:
-
 ```tsx
 "use client";
 
