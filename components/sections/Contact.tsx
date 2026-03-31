@@ -1,56 +1,54 @@
-"use client";
+import { ArrowUpRight, Github, Mail } from "lucide-react";
 
-import { site } from "@/lib/site";
 import { SectionReveal } from "@/components/ui/SectionReveal";
-import { IconEmail, IconGitHub, IconLinkedIn } from "@/components/ui/Icons";
+import { site } from "@/lib/site";
 
 export function Contact() {
   return (
-    <SectionReveal delay={50}>
-      <section
-        id="contact"
-        className="scroll-mt-16 border-b border-stone-200/80 dark:border-stone-800/80"
-      >
-        <div className="mx-auto max-w-5xl px-6 py-24 sm:px-10 lg:px-14">
-          <p className="section-label text-stone-500 dark:text-stone-500">
-            05 — Contact
-          </p>
-          <h2 className="section-heading section-title mt-2 text-3xl font-bold text-stone-900 dark:text-stone-100 sm:text-4xl">
-            Get in touch
-          </h2>
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-stone-600 dark:text-stone-400">
-            I&apos;m open to new opportunities and conversations. Reach out via any of the links below.
-          </p>
-          <ul className="mt-10 flex flex-wrap gap-4" role="list">
-            <li>
-              <a
-                href={site.links.email}
-                className="inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-6 py-3.5 text-sm font-medium text-stone-700 shadow-sm transition hover:border-teal-200 hover:text-teal-600 dark:border-stone-700 dark:bg-stone-800/50 dark:text-stone-300 dark:hover:border-teal-500/50 dark:hover:text-teal-400"
-              >
-                <IconEmail /> Email
-              </a>
-            </li>
-            <li>
-              <a
-                href={site.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-6 py-3.5 text-sm font-medium text-stone-700 shadow-sm transition hover:border-teal-200 hover:text-teal-600 dark:border-stone-700 dark:bg-stone-800/50 dark:text-stone-300 dark:hover:border-teal-500/50 dark:hover:text-teal-400"
-              >
-                <IconGitHub /> GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href={site.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-6 py-3.5 text-sm font-medium text-stone-700 shadow-sm transition hover:border-teal-200 hover:text-teal-600 dark:border-stone-700 dark:bg-stone-800/50 dark:text-stone-300 dark:hover:border-teal-500/50 dark:hover:text-teal-400"
-              >
-                <IconLinkedIn /> LinkedIn
-              </a>
-            </li>
-          </ul>
+    <SectionReveal delay={60}>
+      <section id="contact" className="py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
+          <div className="surface-panel-dark rounded-[2rem] px-6 py-8 sm:px-8 sm:py-10">
+            <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+              <div>
+                <p className="section-eyebrow !text-[rgba(232,165,94,0.85)]">Contact</p>
+                <h2 className="section-title mt-4 text-4xl font-semibold text-[var(--panel-dark-foreground)] sm:text-5xl">
+                  Let&apos;s talk about product work, internships, or how to make a project read
+                  better.
+                </h2>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
+                  I care about building things that feel thoughtful and review well. If you
+                  want to chat about DraftLens, frontend product work, or an opportunity
+                  where that mindset is useful, I&apos;d be glad to connect.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <a href={`mailto:${site.email}`} className="primary-button">
+                  <Mail className="h-4 w-4" />
+                  {site.email}
+                </a>
+                <a
+                  href={site.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="secondary-button !border-white/12 !bg-white/4 !text-white/80 hover:!text-white"
+                >
+                  <Github className="h-4 w-4" />
+                  GitHub profile
+                </a>
+                <a
+                  href="https://github.com/arjunymun/essay-feedback-app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="secondary-button !border-white/12 !bg-white/4 !text-white/80 hover:!text-white"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                  DraftLens repository
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </SectionReveal>

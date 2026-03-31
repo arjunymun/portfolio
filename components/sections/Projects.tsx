@@ -1,183 +1,178 @@
-"use client";
-
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
-import { projects } from "@/lib/content";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+import { projects } from "@/lib/content";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 
-const list = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const listItem = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-function ProjectCard({ project }: { project: (typeof projects)[0] }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [style, setStyle] = useState<React.CSSProperties>({});
-
-  const handleMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width; // 0..1
-    const py = (e.clientY - rect.top) / rect.height; // 0..1
-    const rotateY = (px - 0.5) * 12; // -6 .. 6
-    const rotateX = (0.5 - py) * 8; // -4 .. 4
-    setStyle({ transform: `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`, boxShadow: '0 18px 40px rgba(2,6,23,0.08)' });
-  };
-
-  const handleLeave = () => {
-    setStyle({ transform: 'none', boxShadow: undefined });
-  };
-
+function ProjectActions({
+  links,
+}: {
+  links: Array<{ label: string; href: string; external?: boolean }>;
+}) {
   return (
-    <div ref={ref} onMouseMove={handleMove} onMouseLeave={handleLeave} style={style} className="transform-gpu will-change-transform">
-      {project.image ? (
-        <div className="mb-4 overflow-hidden rounded-md">
-          <Image src={project.image} alt={project.title} width={800} height={320} className="w-full h-40 object-cover" />
-        </div>
-      ) : (
-        <div className="mb-4 h-40 w-full rounded-md bg-gradient-to-br from-stone-100 to-white dark:from-stone-800/20" />
+    <div className="mt-7 flex flex-wrap gap-3">
+      {links.map((link) =>
+        link.external ? (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className="secondary-button"
+          >
+            {link.label}
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        ) : (
+          <Link key={link.href} href={link.href} className="secondary-button">
+            {link.label}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        ),
       )}
-
-      <h4 className="font-display text-lg font-semibold text-stone-900 dark:text-stone-100">{project.title}</h4>
-      <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-400">{project.description}</p>
-      {project.outcome && <p className="mt-2 text-sm font-medium text-teal-600 dark:text-teal-400">{project.outcome}</p>}
-
-      <div className="mt-4 tags">
-        {project.tags.map((t) => (
-          <span key={t} className="tag">{t}</span>
-        ))}
-      </div>
-
-      <div className="mt-5 flex gap-4 text-sm font-medium">
-        {project.liveUrl && (
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-teal-600 underline-offset-4 hover:text-teal-500 dark:text-teal-400">Live site →</a>
-        )}
-        {project.repoUrl && (
-          <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-stone-600 underline-offset-4 hover:text-teal-600 dark:text-stone-400">Source</a>
-        )}
-      </div>
     </div>
   );
 }
 
 export function Projects() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.05 });
-  const [hasBeenVisible, setHasBeenVisible] = useState(false);
-  useEffect(() => {
-    if (inView) setHasBeenVisible(true);
-  }, [inView]);
-
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const featured = projects.find((project) => project.featured);
+  const supporting = projects.filter((project) => !project.featured);
 
   return (
-    <SectionReveal delay={100}>
-      <section
-        id="projects"
-        className="scroll-mt-16 border-b border-stone-200/80 dark:border-stone-800/80"
-      >
-        <div ref={ref} className="mx-auto max-w-5xl px-6 py-24 sm:px-10 lg:px-14">
-          <p className="section-label text-stone-500 dark:text-stone-500">
-            03 — Work
-          </p>
-          <h2 className="section-heading section-title mt-2 text-3xl font-bold text-stone-900 dark:text-stone-100 sm:text-4xl">
-            Projects
-          </h2>
-
-          {featured && (
-            <motion.article
-              initial={{ opacity: 0, y: 24 }}
-              animate={hasBeenVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="mt-12 featured-card card"
-            >
-              <span className="section-label text-teal-600 dark:text-teal-400">
-                Featured
-              </span>
-              <h3 className="font-display mt-2 text-2xl font-bold text-stone-900 dark:text-stone-100 sm:text-3xl">
-                {featured.title}
-              </h3>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-600 dark:text-stone-400">
-                {featured.description}
-              </p>
-              {featured.image && (
-                <div className="mt-6 w-full overflow-hidden rounded-md">
-                  <Image src={featured.image} alt={featured.title} width={1400} height={440} className="w-full h-44 object-cover" priority />
-                </div>
-              )}
-              {featured.outcome && (
-                <p className="mt-3 text-sm font-semibold text-teal-600 dark:text-teal-400">
-                  {featured.outcome}
-                </p>
-              )}
-              <div className="mt-6 tags">
-                {featured.tags.map((tag) => (
-                  <span key={tag} className="tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-8 flex gap-6 text-sm font-medium">
-                {featured.liveUrl && (
-                  <a
-                    href={featured.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-teal-600 underline-offset-4 hover:text-teal-500 dark:text-teal-400 dark:hover:text-teal-300"
-                  >
-                    Live site →
-                  </a>
-                )}
-                {featured.repoUrl && (
-                  <a
-                    href={featured.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-stone-600 underline-offset-4 hover:text-teal-600 dark:text-stone-400 dark:hover:text-teal-400"
-                  >
-                    Source
-                  </a>
-                )}
-              </div>
-            </motion.article>
-          )}
-
-          {rest.length > 0 && (
-            <motion.ul
-              className="mt-12 grid gap-6 sm:grid-cols-2"
-              variants={list}
-              initial="hidden"
-              animate={hasBeenVisible ? "visible" : "hidden"}
-            >
-              {rest.map((project) => (
-                <motion.li
-                  key={project.title}
-                  variants={listItem}
-                  transition={{ duration: 0.35 }}
-                  className="group project-card card"
-                >
-                  <ProjectCard project={project} />
-                </motion.li>
-              ))}
-            </motion.ul>
-          )}
-
-          {projects.length === 0 && (
-            <p className="mt-12 text-stone-500 dark:text-stone-400">
-              Add projects in <code className="rounded bg-stone-200 px-1.5 py-0.5 text-sm dark:bg-stone-700">lib/content.ts</code>.
+    <SectionReveal delay={80}>
+      <section id="work" className="border-b border-[var(--border)] py-20 sm:py-24">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 sm:px-8 lg:px-10">
+          <div className="max-w-3xl">
+            <p className="section-eyebrow">Selected work</p>
+            <h2 className="section-title mt-4 text-4xl font-semibold text-[var(--foreground)] sm:text-5xl">
+              One flagship project, plus the supporting work around it.
+            </h2>
+            <p className="section-copy mt-4 max-w-2xl text-base leading-8">
+              DraftLens is the clearest example of how I like to build. The rest of the
+              shelf shows the systems thinking, iteration, and presentation work that support
+              it.
             </p>
-          )}
+          </div>
+
+          {featured ? (
+            <article className="surface-panel-dark overflow-hidden rounded-[2.2rem] p-6 sm:p-8">
+              <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="pill !border-white/10 !bg-white/4 !text-white/70">
+                        {featured.year}
+                      </span>
+                      <span className="pill !border-white/10 !bg-white/4 !text-white/70">
+                        {featured.status}
+                      </span>
+                    </div>
+
+                    <p className="section-eyebrow mt-5 !text-[rgba(232,165,94,0.85)]">
+                      Featured case study
+                    </p>
+                    <h3 className="section-title mt-4 max-w-[11ch] text-[clamp(2.8rem,5vw,4.8rem)] font-semibold leading-[0.96] text-[var(--panel-dark-foreground)]">
+                      {featured.title}
+                    </h3>
+                    <p className="mt-4 text-sm uppercase tracking-[0.18em] text-white/48">
+                      {featured.kicker}
+                    </p>
+                    <p className="mt-5 max-w-xl text-base leading-8 text-white/72">
+                      {featured.summary}
+                    </p>
+                  </div>
+
+                  <div className="mt-8">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <article className="rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4">
+                        <p className="section-eyebrow !text-white/45">Role</p>
+                        <p className="mt-3 text-sm leading-6 text-white/76">{featured.role}</p>
+                      </article>
+                      <article className="rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4">
+                        <p className="section-eyebrow !text-white/45">Why it matters</p>
+                        <p className="mt-3 text-sm leading-6 text-white/76">
+                          {featured.takeaway}
+                        </p>
+                      </article>
+                    </div>
+
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {featured.stack.map((item) => (
+                        <span
+                          key={item}
+                          className="pill !border-white/10 !bg-white/4 !text-white/70"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <ProjectActions links={featured.links} />
+                  </div>
+                </div>
+
+                {featured.image ? (
+                  <div className="flex flex-col gap-3">
+                    <div className="rounded-full border border-white/10 bg-white/4 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/55">
+                      Product surface preview
+                    </div>
+                    <div className="overflow-hidden rounded-[1.8rem] border border-white/10 bg-black/20 p-3 sm:p-4">
+                      <Image
+                        src={featured.image.src}
+                        alt={featured.image.alt}
+                        width={featured.image.width}
+                        height={featured.image.height}
+                        className="h-full w-full rounded-[1.25rem] object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ) : null}
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            {supporting.map((project) => (
+              <article
+                key={project.slug}
+                className="project-card surface-panel rounded-[1.75rem] p-6 sm:p-7"
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="section-eyebrow">{project.kicker}</p>
+                  <span className="pill !px-3 !py-1">{project.status}</span>
+                </div>
+
+                <div className="mt-4">
+                  <h3 className="section-title text-[1.95rem] font-semibold leading-[1.02] text-[var(--foreground)]">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-[var(--foreground-muted)]">
+                    {project.role}
+                  </p>
+                </div>
+
+                <p className="section-copy mt-5 text-sm leading-7">{project.summary}</p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.stack.map((item) => (
+                    <span key={item} className="pill !bg-[var(--background-strong)]">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-[1.25rem] border border-[var(--border)] bg-[var(--background-strong)] px-4 py-4">
+                  <p className="section-eyebrow">Takeaway</p>
+                  <p className="mt-3 text-sm leading-7 text-[var(--foreground)]">
+                    {project.takeaway}
+                  </p>
+                </div>
+
+                <ProjectActions links={project.links} />
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </SectionReveal>

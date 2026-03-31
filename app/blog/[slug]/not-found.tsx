@@ -2,19 +2,21 @@ import Link from "next/link";
 
 export default function BlogPostNotFound() {
   return (
-    <main className="min-h-screen">
-      <div className="mx-auto max-w-4xl px-4 py-12">
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          Post not found
+    <main className="py-20">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-6 sm:px-8">
+        <p className="section-eyebrow">Post not found</p>
+        <h1 className="section-title text-4xl font-semibold text-[var(--foreground)]">
+          That article is not available.
         </h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-          The blog post you&apos;re looking for doesn&apos;t exist or was removed.
+        <p className="section-copy text-base leading-8">
+          The writing section is still small, but the DraftLens note is live and more posts
+          will follow as the portfolio grows.
         </p>
         <Link
           href="/blog"
-          className="mt-6 inline-block font-medium text-zinc-700 underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:text-zinc-300 dark:focus-visible:outline-zinc-100"
+          className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition hover:underline hover:underline-offset-4"
         >
-          Back to Blog
+          Back to writing
         </Link>
       </div>
     </main>

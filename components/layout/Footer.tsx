@@ -1,45 +1,69 @@
 import Link from "next/link";
+import { ArrowUpRight, Github, Mail } from "lucide-react";
+
 import { site } from "@/lib/site";
-import { IconEmail, IconGitHub, IconLinkedIn } from "@/components/ui/Icons";
+
+const iconByLabel = {
+  GitHub: Github,
+  Email: Mail,
+} as const;
 
 export function Footer() {
   return (
-    <footer className="border-t border-stone-200/80 bg-stone-100/60 dark:border-stone-800/80 dark:bg-stone-900/40">
-      <div className="mx-auto max-w-5xl px-6 py-12 sm:px-10 lg:px-14">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <p className="text-sm text-stone-600 dark:text-stone-400">
-            © {new Date().getFullYear()} {site.ownerName}.
-          </p>
-          <div className="flex gap-8">
-            <a
-              href={site.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-medium text-stone-600 transition hover:text-teal-600 dark:text-stone-400 dark:hover:text-teal-400"
-            >
-              <IconGitHub /> GitHub
-            </a>
-            <a
-              href={site.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-medium text-stone-600 transition hover:text-teal-600 dark:text-stone-400 dark:hover:text-teal-400"
-            >
-              <IconLinkedIn /> LinkedIn
-            </a>
-            <a
-              href={site.links.email}
-              className="flex items-center gap-2 text-sm font-medium text-stone-600 transition hover:text-teal-600 dark:text-stone-400 dark:hover:text-teal-400"
-            >
-              <IconEmail /> Email
-            </a>
+    <footer className="border-t border-[var(--border)] pb-12 pt-14">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 sm:px-8 lg:px-10">
+        <div className="surface-panel rounded-[2rem] px-6 py-8 sm:px-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="section-eyebrow">Closing note</p>
+              <h2 className="section-title mt-3 text-3xl font-semibold text-[var(--foreground)] sm:text-4xl">
+                I&apos;m aiming for product work that feels careful, credible, and easy to trust.
+              </h2>
+              <p className="section-copy mt-4 max-w-xl text-base leading-8">
+                {site.availability} If DraftLens or the way this portfolio is structured feels
+                like a good fit for your team, I&apos;d love to talk.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {site.socialLinks.map((link) => {
+                const Icon =
+                  iconByLabel[link.label as keyof typeof iconByLabel] ?? ArrowUpRight;
+
+                return link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="secondary-button"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link key={link.href} href={link.href} className="secondary-button">
+                    <Icon className="h-4 w-4" />
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <p className="mt-8 text-center text-xs text-stone-500 dark:text-stone-500">
-          <Link href="/blog" className="hover:text-teal-600 dark:hover:text-teal-400">
-            Blog
+
+        <div className="flex flex-col gap-3 text-sm text-[var(--foreground-muted)] sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            (c) {new Date().getFullYear()} {site.name}. Built with Next.js, TypeScript, and a
+            stronger respect for case-study clarity.
+          </p>
+          <Link
+            href="/blog"
+            className="text-[var(--accent-strong)] transition hover:underline hover:underline-offset-4"
+          >
+            Read the writing log
           </Link>
-        </p>
+        </div>
       </div>
     </footer>
   );

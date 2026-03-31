@@ -1,73 +1,83 @@
-"use client";
-
 import Link from "next/link";
-import { useState, useEffect } from "react";
+
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { site } from "@/lib/site";
 
-const navLinks = [
-  { href: "#hero", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-  { href: "/blog", label: "Blog" },
-];
-
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header
-      className={`sticky top-0 z-50 border-b backdrop-blur-md transition-[background-color,box-shadow] duration-300 ${
-        scrolled
-          ? "border-stone-200/90 bg-[var(--background)]/95 shadow-sm dark:border-stone-800/90 dark:shadow-black/10"
-          : "border-stone-200/80 bg-[var(--background)]/80 dark:border-stone-800/80"
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[color:var(--panel)]/88 backdrop-blur-xl">
       <nav
-        className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4 sm:px-10 lg:px-14"
+        className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-3 sm:px-8 sm:py-4 lg:px-10"
         aria-label="Main navigation"
       >
-        <Link href="/" className="flex items-center gap-3">
-          <span aria-hidden className="inline-block h-2 w-2 shrink-0 rounded-full bg-teal-500 shadow-sm" />
-          <span className="font-display text-lg font-bold text-stone-900 dark:text-stone-100 transition hover:text-teal-600 dark:hover:text-teal-400">
-            {site.name}
-          </span>
-        </Link>
-        <ul className="flex flex-wrap items-center gap-0.5 sm:gap-1">
-          {navLinks.map(({ href, label }) =>
-            href.startsWith("#") ? (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 transition hover:bg-teal-500/10 hover:text-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 dark:text-stone-400 dark:hover:bg-teal-400/10 dark:hover:text-teal-400 dark:focus-visible:outline-teal-400"
-                >
-                  {label}
-                </a>
-              </li>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex min-w-0 items-center gap-3">
+            <span
+              aria-hidden
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-sm font-semibold text-[var(--accent-strong)]"
+            >
+              {site.shortName.slice(0, 2).toUpperCase()}
+            </span>
+            <div className="min-w-0">
+              <p className="truncate font-display text-sm font-semibold text-[var(--foreground)] sm:text-base">
+                {site.name}
+              </p>
+              <p className="truncate text-[11px] text-[var(--foreground-muted)] sm:text-xs">
+                {site.role}
+              </p>
+            </div>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <ul className="hidden items-center gap-1 md:flex">
+              {site.navigation.map((item) => (
+                <li key={item.href}>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full px-3 py-2 text-sm text-[var(--foreground-soft)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="rounded-full px-3 py-2 text-sm text-[var(--foreground-soft)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <ThemeToggle />
+          </div>
+        </div>
+
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1 md:hidden">
+          {site.navigation.map((item) =>
+            item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="shrink-0 rounded-full border border-[var(--border)] bg-white/45 px-2.5 py-1.5 text-[11px] font-medium text-[var(--foreground-soft)] transition hover:border-[var(--border-strong)] hover:text-[var(--accent-strong)] dark:bg-white/4"
+              >
+                {item.label}
+              </a>
             ) : (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 transition hover:bg-teal-500/10 hover:text-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 dark:text-stone-400 dark:hover:bg-teal-400/10 dark:hover:text-teal-400 dark:focus-visible:outline-teal-400"
-                >
-                  {label}
-                </Link>
-              </li>
-            )
+              <Link
+                key={item.href}
+                href={item.href}
+                className="shrink-0 rounded-full border border-[var(--border)] bg-white/45 px-2.5 py-1.5 text-[11px] font-medium text-[var(--foreground-soft)] transition hover:border-[var(--border-strong)] hover:text-[var(--accent-strong)] dark:bg-white/4"
+              >
+                {item.label}
+              </Link>
+            ),
           )}
-        </ul>
-        <div className="ml-3 flex items-center gap-3">
-          <ThemeToggle />
         </div>
       </nav>
     </header>

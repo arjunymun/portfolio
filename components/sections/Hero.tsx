@@ -1,88 +1,117 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { ArrowRight, Github, MapPin } from "lucide-react";
+
+import { hero } from "@/lib/content";
 import { site } from "@/lib/site";
-import { ArrowDown, ArrowRight, Mail } from "lucide-react";
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 export function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-gradient-to-b from-[#0a0908] via-[#0f0e0d] to-[#0f0e0d] dark:from-[#050504] dark:via-[#080807] dark:to-[#080807]"
-    >
-      <div className="hero-pattern absolute inset-0" aria-hidden />
-      <div className="grain absolute inset-0 opacity-40" aria-hidden />
+    <section id="hero" className="border-b border-[var(--border)] pb-14 pt-10 sm:pb-20 sm:pt-14">
+      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 sm:px-8 lg:grid-cols-[0.94fr_1.06fr] lg:gap-12 lg:px-10">
+        <div className="flex flex-col justify-center">
+          <p className="section-eyebrow">{hero.eyebrow}</p>
+          <h1 className="section-title mt-5 max-w-[11.5ch] text-[clamp(3.2rem,6.9vw,5.9rem)] font-semibold leading-[0.94] text-[var(--foreground)]">
+            {hero.title}
+          </h1>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--foreground)] sm:text-[1.2rem]">
+            {hero.intro}
+          </p>
+          <p className="section-copy mt-4 max-w-xl text-[0.98rem] leading-8 sm:text-[1.04rem]">
+            {hero.summary}
+          </p>
 
-      <motion.div
-        className="absolute right-[-15%] top-1/2 h-[80vmin] w-[80vmin] -translate-y-1/2 rounded-full opacity-40 dark:opacity-25 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.5, 0.4] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden
-      />
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href={hero.primaryCta.href} className="primary-button">
+              {hero.primaryCta.label}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href={hero.secondaryCta.href}
+              target={hero.secondaryCta.external ? "_blank" : undefined}
+              rel={hero.secondaryCta.external ? "noreferrer" : undefined}
+              className="secondary-button"
+            >
+              <Github className="h-4 w-4" />
+              {hero.secondaryCta.label}
+            </a>
+          </div>
 
-      <motion.div
-        className="absolute bottom-[-20%] left-[-10%] h-[60vmin] w-[60vmin] rounded-full opacity-25 dark:opacity-15 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(20, 184, 166, 0.45) 0%, transparent 65%)" }}
-        animate={{ scale: [1, 1.12, 1], opacity: [0.25, 0.35, 0.25] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        aria-hidden
-      />
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {hero.highlights.map((item) => (
+              <article key={item.label} className="stat-card">
+                <p className="section-eyebrow">{item.label}</p>
+                <p className="mt-3 text-sm font-semibold leading-6 text-[var(--foreground)]">
+                  {item.value}
+                </p>
+              </article>
+            ))}
+          </div>
 
-      <motion.div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-24 sm:px-10 sm:py-32 lg:px-16" variants={container} initial="hidden" animate="visible">
-        <motion.p className="section-label text-teal-400/70 font-medium tracking-wider" variants={item}>
-          WELCOME TO MY PORTFOLIO
-        </motion.p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--foreground-muted)]">
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-[var(--accent)]" />
+              {site.location}
+            </span>
+            <span>{site.availability}</span>
+          </div>
+        </div>
 
-        <motion.h1 className="font-display mt-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl" variants={item} style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}>
-          <span className="block">
-            <span className="hero-title-accent bg-gradient-to-r from-white via-white to-teal-400 bg-clip-text text-transparent">{site.ownerName}</span>
-          </span>
-          <span className="block mt-3 text-[0.4em] font-semibold tracking-tight text-teal-400 md:text-[0.35em]">{site.roleLine}</span>
-        </motion.h1>
+        <div className="lg:pt-3">
+          <div className="surface-panel-dark relative overflow-hidden rounded-[2rem] p-5 sm:p-6">
+            <div className="pointer-events-none absolute inset-x-6 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(69,183,173,0.12),transparent_70%)]" />
 
-        <motion.p className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-300 sm:text-xl md:text-2xl" variants={item}>
-          {site.tagline}
-        </motion.p>
+            <div className="window-chrome">
+              <span className="window-dot bg-[rgba(255,255,255,0.42)]" />
+              <span className="window-dot bg-[rgba(255,255,255,0.24)]" />
+              <span className="window-dot bg-[rgba(255,255,255,0.14)]" />
+            </div>
 
-        <motion.div className="mt-14 flex flex-wrap gap-5" variants={item}>
-          <a href="#projects" className="group btn btn-primary relative overflow-hidden inline-flex items-center gap-3 px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20">
-            <span className="relative z-10">View my work</span>
-            <ArrowRight size={16} className="relative z-10" />
-            <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-teal-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </a>
+            <div className="relative flex items-start justify-between gap-4">
+              <div>
+                <p className="section-eyebrow !text-[rgba(232,165,94,0.85)]">
+                  {hero.preview.label}
+                </p>
+                <h2 className="section-title mt-3 text-[clamp(2rem,3vw,3.2rem)] font-semibold text-[var(--panel-dark-foreground)]">
+                  {hero.preview.title}
+                </h2>
+              </div>
+              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-white/60">
+                Case study
+              </span>
+            </div>
 
-          <Link href="#contact" className="btn btn-ghost inline-flex items-center gap-3 px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:border-teal-400/50 hover:text-teal-400">
-            <span>Get in touch</span>
-            <Mail size={16} />
-          </Link>
-        </motion.div>
-      </motion.div>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-white/72 sm:text-base">
+              {hero.preview.description}
+            </p>
 
-      <motion.a href="#about" className="absolute bottom-12 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/40 transition-all duration-300 hover:text-teal-400" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 0.8 }} aria-label="Scroll to about section">
-        <span className="section-label text-xs font-medium tracking-widest">SCROLL</span>
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-          <ArrowDown className="h-5 w-5" />
-        </motion.div>
-      </motion.a>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {hero.preview.bullets.map((item) => (
+                <article
+                  key={item}
+                  className="rounded-[1.2rem] border border-white/8 bg-white/4 px-4 py-4 text-sm leading-6 text-white/72"
+                >
+                  {item}
+                </article>
+              ))}
+            </div>
+
+            <div className="relative mt-6 overflow-hidden rounded-[1.6rem] border border-white/8 bg-black/20 p-3 sm:p-4">
+              <div className="floating-note">
+                Demo-ready walkthrough
+              </div>
+              <Image
+                src={hero.preview.imageSrc}
+                alt={hero.preview.imageAlt}
+                width={1440}
+                height={1600}
+                priority
+                className="h-auto w-full rounded-[1.15rem] object-cover object-top"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

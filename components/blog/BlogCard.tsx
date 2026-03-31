@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 import type { BlogPostMeta } from "@/lib/blog";
 
 interface BlogCardProps {
@@ -6,31 +8,39 @@ interface BlogCardProps {
   meta: BlogPostMeta;
 }
 
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export function BlogCard({ slug, meta }: BlogCardProps) {
   return (
-    <article className="card">
-      <h3 className="font-[family-name:var(--font-outfit)] font-semibold text-zinc-900 dark:text-zinc-100">
-        <Link href={`/blog/${slug}`} className="muted-link">
-          {meta.title}
-        </Link>
+    <article className="project-card surface-panel rounded-[1.5rem] p-6">
+      <p className="section-eyebrow">Writing note</p>
+      <h3 className="section-title mt-4 text-2xl font-semibold text-[var(--foreground)]">
+        {meta.title}
       </h3>
-      {meta.date && (
+      {meta.date ? (
         <time
           dateTime={meta.date}
-          className="mt-2 block text-sm text-teal-600 dark:text-teal-400"
+          className="mt-3 block text-sm text-[var(--accent-strong)]"
         >
-          {new Date(meta.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatDate(meta.date)}
         </time>
-      )}
-      {meta.excerpt && (
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          {meta.excerpt}
-        </p>
-      )}
+      ) : null}
+      {meta.excerpt ? (
+        <p className="section-copy mt-4 text-sm leading-7">{meta.excerpt}</p>
+      ) : null}
+      <Link
+        href={`/blog/${slug}`}
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition hover:underline hover:underline-offset-4"
+      >
+        Read article
+        <ArrowRight className="h-4 w-4" />
+      </Link>
     </article>
   );
 }
