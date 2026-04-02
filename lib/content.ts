@@ -20,8 +20,11 @@ export interface HeroContent {
     title: string;
     description: string;
     bullets: string[];
+    badge: string;
     imageSrc: string;
     imageAlt: string;
+    imageWidth: number;
+    imageHeight: number;
   };
 }
 
@@ -95,33 +98,36 @@ export interface ProjectCaseStudy extends ProjectSummary {
   lessons: string[];
   buildNotes: string[];
   screenshots: ProjectScreenshot[];
+  availabilityNote?: string;
+  screenshotIntro?: string;
+  closingHeading?: string;
+  closingCopy?: string;
 }
 
 export const hero: HeroContent = {
   eyebrow: "Portfolio",
-  title:
-    "I build thoughtful web products with strong frontend craft.",
+  title: "I build thoughtful web products with strong frontend craft.",
   intro:
     "I'm Arjun Yadav, a full-stack developer with a bachelor's in computer science from Memorial University of Newfoundland.",
   summary:
-    "Right now I'm focused on practical AI workflows, typed systems, and interfaces that feel calm, credible, and easy to review through strong product storytelling.",
+    "My strongest work right now spans two different lanes: trust-first AI workflows like DraftLens and real-world operations software like Sideout. I care about typed systems, calm interfaces, and product stories that feel believable under scrutiny.",
   highlights: [
     {
       label: "Current focus",
-      value: "Case-study quality product work",
+      value: "Flagship-quality product systems",
     },
     {
       label: "Core stack",
       value: "Next.js, TypeScript, Supabase",
     },
     {
-      label: "Working style",
-      value: "AI features with real fallback paths",
+      label: "Range",
+      value: "AI workflows and commercial operations software",
     },
   ],
   primaryCta: {
-    label: "Read the DraftLens case study",
-    href: "/projects/draftlens",
+    label: "View flagship projects",
+    href: "/#work",
   },
   secondaryCta: {
     label: "Browse GitHub",
@@ -129,44 +135,47 @@ export const hero: HeroContent = {
     external: true,
   },
   preview: {
-    label: "Flagship build",
-    title: "DraftLens",
+    label: "Lead flagship",
+    title: "Sideout",
     description:
-      "A student-facing writing feedback product that combines rubric scoring, citation checks, saved reports, and rewrite help in one clear workflow.",
+      "A premium operator-grade pickleball club OS shaped by a real family-run venue in Dehradun, with guest browsing, bookings, memberships, packs, credits, offers, and operator retention workflows in one system.",
     bullets: [
-      "Typed full-stack app built with Next.js 16, Supabase, and OpenAI",
-      "Upload flow designed around DOCX and text-based PDFs",
-      "Demo-ready fallback path for smoother product walkthroughs",
+      "Public marketing, customer routes, and admin/operator surfaces in one Next.js codebase",
+      "India-first pricing, wallet value, memberships, and offers shaped around repeat play",
+      "Supabase runtime with Stripe and WhatsApp-ready scaffolding for a believable live business system",
     ],
-    imageSrc: "/projects/draftlens-landing.png",
-    imageAlt: "DraftLens landing page preview",
+    badge: "Live multi-surface product",
+    imageSrc: "/projects/sideout-landing.png",
+    imageAlt: "Sideout landing page with premium venue positioning and repeat-play metrics",
+    imageWidth: 1280,
+    imageHeight: 5960,
   },
 };
 
 export const proofItems: ProofItem[] = [
   {
-    label: "Product-first scope",
-    value: "Uploads to saved reports",
+    label: "Product range",
+    value: "AI workflow to venue OS",
     description:
-      "I like building features as complete product flows instead of isolated UI fragments.",
+      "The portfolio now shows both intelligent document products and real-world commerce and operations software.",
   },
   {
     label: "Frontend discipline",
-    value: "Editorial UI that scales",
+    value: "Editorial UI with product fidelity",
     description:
-      "I care about interfaces that communicate clearly before they try to impress.",
+      "I care about interfaces that feel intentional, readable, and convincing before they try to impress.",
   },
   {
-    label: "AI with guardrails",
-    value: "Fallback paths that stay useful",
+    label: "System design",
+    value: "Storefront to admin console",
     description:
-      "If a paid API is missing, the product should still explain itself and stay explorable.",
+      "I like builds where marketing, customer, and operator surfaces share one clear domain model.",
   },
   {
     label: "Current focus",
-    value: "Work built to review well",
+    value: "Work that holds up in review",
     description:
-      "The goal is not just shipping code, but shipping work that stands up in a portfolio review.",
+      "The goal is not just shipping code, but shipping projects that stand up to real product questions.",
   },
 ];
 
@@ -180,7 +189,7 @@ export const capabilityGroups: CapabilityGroup[] = [
       "TypeScript",
       "Tailwind CSS v4",
       "Responsive editorial layouts",
-      "Accessible component structure",
+      "Multi-surface product UI",
       "Metadata and social sharing surfaces",
     ],
   },
@@ -189,23 +198,23 @@ export const capabilityGroups: CapabilityGroup[] = [
     summary:
       "I am most comfortable when a project needs both UI clarity and real product plumbing behind it.",
     items: [
-      "Supabase auth and storage",
+      "Supabase auth, RLS, and storage",
       "Route handlers and server components",
-      "Structured content models",
-      "File parsing workflows",
-      "Third-party API integration",
+      "Structured content and domain models",
+      "Stripe and provider scaffolding",
+      "Runtime fallback planning",
       "Deployment-friendly environment handling",
     ],
   },
   {
     title: "Product thinking",
     summary:
-      "The projects I keep are the ones where the user problem, the technical choices, and the presentation all connect.",
+      "The projects I keep are the ones where the user problem, the business logic, and the presentation all connect.",
     items: [
       "Feature scoping for v1 products",
       "Case-study writing",
       "Demo-friendly UX",
-      "Fallback and error-state planning",
+      "Retention and value-system modeling",
       "Proof-driven portfolio storytelling",
       "Iteration through shipped personal work",
     ],
@@ -213,6 +222,18 @@ export const capabilityGroups: CapabilityGroup[] = [
 ];
 
 export const experience: ExperienceItem[] = [
+  {
+    period: "2026",
+    title: "Built Sideout",
+    org: "Independent product project",
+    summary:
+      "Turned a real family-run pickleball venue in Dehradun into a serious multi-surface software product with public marketing, customer value flows, and operator retention tooling.",
+    bullets: [
+      "Modeled bookings, packs, memberships, credits, offers, and operator workflows around repeat play instead of treating the venue like a generic scheduler.",
+      "Built customer and admin surfaces that share one domain model, making the product read like a real business system instead of a demo stack.",
+      "Used the project to prove range beyond AI tooling into commerce, customer intelligence, and software for a physical business.",
+    ],
+  },
   {
     period: "2026",
     title: "Built DraftLens",
@@ -251,6 +272,51 @@ export const experience: ExperienceItem[] = [
   },
 ];
 
+const sideoutLanding: ProjectScreenshot = {
+  src: "/projects/sideout-landing.png",
+  alt: "Sideout landing page with premium venue positioning and repeat-play metrics",
+  width: 1280,
+  height: 5960,
+  caption:
+    "The landing page frames Sideout as a premium venue system, not a generic sports-tech dashboard.",
+};
+
+const sideoutCustomerDashboard: ProjectScreenshot = {
+  src: "/projects/sideout-customer-dashboard.png",
+  alt: "Sideout customer dashboard with booking cards, wallet value, and active products",
+  width: 1280,
+  height: 3890,
+  caption:
+    "The customer surface makes booking rules, wallet value, and repeat-play incentives legible at first glance.",
+};
+
+const sideoutWallet: ProjectScreenshot = {
+  src: "/projects/sideout-wallet.png",
+  alt: "Sideout wallet page with credits, pack balance, and membership value",
+  width: 1280,
+  height: 1951,
+  caption:
+    "The wallet page treats credits, packs, and memberships as core product behavior rather than a payment receipt screen.",
+};
+
+const sideoutAdminDashboard: ProjectScreenshot = {
+  src: "/projects/sideout-admin-dashboard.png",
+  alt: "Sideout operator dashboard with request queue, schedule control, occupancy, and retention metrics",
+  width: 1280,
+  height: 4604,
+  caption:
+    "The operator dashboard brings queue management, occupancy, and retention signals into one operating surface.",
+};
+
+const sideoutAdminCustomers: ProjectScreenshot = {
+  src: "/projects/sideout-admin-customers.png",
+  alt: "Sideout admin customers view with notes, credits, inactivity, and manual retention actions",
+  width: 1280,
+  height: 3182,
+  caption:
+    "Customer intelligence keeps notes, inactivity, credits, and communication actions close to the operator workflow.",
+};
+
 const draftLensLanding: ProjectScreenshot = {
   src: "/projects/draftlens-landing.png",
   alt: "DraftLens landing page with hero copy and feature cards",
@@ -280,17 +346,46 @@ const draftLensReport: ProjectScreenshot = {
 
 export const projects: ProjectSummary[] = [
   {
+    slug: "sideout",
+    title: "Sideout",
+    kicker: "Operator-grade venue OS",
+    summary:
+      "A premium pickleball club operating system shaped by a real family-run venue in Dehradun, combining guest-friendly booking, memberships, packs, wallet credits, offers, and operator retention workflows in one product.",
+    role: "Product strategy, frontend, backend, and case-study direction",
+    year: "2026",
+    status: "Lead flagship case study",
+    stack: ["Next.js 16", "TypeScript", "Supabase", "Stripe", "PWA"],
+    takeaway:
+      "The strongest part of Sideout is that it models the business behind a venue: member value, booking rules, operator approvals, and repeat-play behavior in one system.",
+    featured: true,
+    detailPage: true,
+    image: sideoutLanding,
+    links: [
+      { label: "Read case study", href: "/projects/sideout" },
+      {
+        label: "Visit live product",
+        href: "https://pickleball-xi.vercel.app/",
+        external: true,
+      },
+      {
+        label: "View repo",
+        href: "https://github.com/arjunymun/Pickleball",
+        external: true,
+      },
+    ],
+  },
+  {
     slug: "draftlens",
     title: "DraftLens",
-    kicker: "Student writing feedback product",
+    kicker: "Trust-first writing workflow",
     summary:
       "A full-stack academic writing feedback app that scores essays, checks citation signals, saves reports, and offers rewrite help without hiding behind AI hype.",
     role: "Product design, frontend, backend, and case-study direction",
     year: "2026",
-    status: "Flagship case study",
+    status: "Second flagship case study",
     stack: ["Next.js 16", "TypeScript", "Supabase", "OpenAI", "Tailwind CSS"],
     takeaway:
-      "The strongest part of this build is the complete workflow: document upload, structured analysis, saved report history, and a polished report surface.",
+      "The strongest part of DraftLens is the complete workflow: document upload, structured analysis, saved report history, and a polished report surface built around trust.",
     featured: true,
     detailPage: true,
     image: draftLensLanding,
@@ -348,6 +443,109 @@ export const projects: ProjectSummary[] = [
 export const caseStudies: ProjectCaseStudy[] = [
   {
     ...projects[0],
+    problem:
+      "Single-venue clubs do not just sell open court time. They sell habits, member value, better repeat behavior, and reasons to come back. A simple booking layer was not enough to reflect how a real venue actually runs.",
+    audience:
+      "Venue owners, operators, and regular players at a premium pickleball club, especially in a business that needs bookings, offers, credits, and customer memory to work together.",
+    challenge:
+      "The hard part was not making a nice landing page or a court schedule. It was connecting storefront, customer value flows, and operator actions without collapsing into a generic dashboard or a shallow booking clone.",
+    solutionSummary:
+      "Sideout turns a real family-run venue in Dehradun into a repeat-play operating system with public marketing, customer booking and value flows, and an operator console for approvals, retention, and customer intelligence.",
+    workflow: [
+      "Guests can browse availability, offers, and venue positioning before creating an account.",
+      "After sign-in, customers move through live bookings, wallet credits, packs, memberships, and offer-led repeat-play flows.",
+      "Some slots confirm instantly while others enter an operator review path, reflecting how real venue inventory behaves.",
+      "Wallet value, packs, memberships, and offer redemptions shape how customers book and what value gets restored after cancellations.",
+      "Operators manage queue approvals, schedule quality, at-risk customers, commercial nudges, and WhatsApp-ready communication flows from the admin side.",
+    ],
+    architecture: [
+      {
+        title: "Multi-surface App Router product",
+        detail:
+          "Next.js 16 App Router handles the public marketing site, customer shell, admin shell, and runtime APIs inside one codebase and one visual system.",
+      },
+      {
+        title: "Supabase auth and venue model",
+        detail:
+          "Supabase powers phone-first customer auth, operator access, venue bootstrap data, and the shared runtime model behind courts, customers, bookings, and value products.",
+      },
+      {
+        title: "Domain logic for repeat play",
+        detail:
+          "The product models bookings, mixed confirmation rules, wallet credits, packs, memberships, offers, and operator actions as one connected system instead of isolated features.",
+      },
+      {
+        title: "Hybrid demo and live runtime",
+        detail:
+          "A demo-first runtime keeps the product reviewable on localhost while Supabase-backed flows can promote the same surfaces into a live venue configuration.",
+      },
+      {
+        title: "Commerce scaffolding",
+        detail:
+          "Stripe Checkout and webhook routes are wired for pack purchases and recurring memberships, with the data model ready for real value products without overstating live production usage.",
+      },
+      {
+        title: "Communication and installability",
+        detail:
+          "Twilio WhatsApp scaffolding and PWA support extend the product beyond booking screens into venue operations and repeat customer behavior.",
+      },
+    ],
+    outcomes: [
+      {
+        label: "Three product surfaces",
+        value: "Marketing, customer, operator",
+        detail:
+          "Sideout reads like one coherent system across public positioning, customer value flows, and operator decision-making.",
+      },
+      {
+        label: "Commerce logic",
+        value: "Packs, memberships, credits",
+        detail:
+          "The product models how a venue actually drives repeat play instead of stopping at court availability and one-off checkout.",
+      },
+      {
+        label: "Retention layer",
+        value: "At-risk players and offer response",
+        detail:
+          "Operators can see expiring value, inactive players, notes, and targeted nudges instead of relying on a generic schedule view alone.",
+      },
+      {
+        label: "Runtime credibility",
+        value: "Demo-first with live posture",
+        detail:
+          "The app stays reviewable without setup but also has the schema, auth, and API shape needed to promote into a live venue runtime.",
+      },
+    ],
+    lessons: [
+      "A physical-business product becomes much more convincing when the booking flow, value system, and operator actions all reinforce the same business story.",
+      "What made Sideout feel ambitious was not more screens by themselves, but making those screens share one believable operating model.",
+      "Retention logic can be a first-class product surface without sounding like a growth hack if the UX stays grounded in real customer behavior.",
+      "A second flagship project should not just repeat the first one. Sideout matters because it proves range beyond DraftLens into commerce and operations software.",
+    ],
+    buildNotes: [
+      "The live app currently exposes public marketing, customer routes, and admin routes through one shared product system.",
+      "Stripe is wired as product-ready commerce scaffolding for packs and memberships, without claiming more than the current integration supports.",
+      "WhatsApp/Twilio flows are scaffolded so communication history and template-driven nudges belong inside the operator workflow.",
+      "The app is India-first in pricing and timezone assumptions, which helps the product feel shaped around a real venue instead of a generic international starter.",
+    ],
+    screenshots: [
+      sideoutLanding,
+      sideoutCustomerDashboard,
+      sideoutWallet,
+      sideoutAdminDashboard,
+      sideoutAdminCustomers,
+    ],
+    availabilityNote:
+      "The live marketing, customer, and operator surfaces are public, so this case study can point to a working product instead of relying only on static mockups.",
+    screenshotIntro:
+      "I wanted the case study to show the system where the product stakes are easiest to judge: the storefront, the customer value layer, and the operator workflows behind repeat play.",
+    closingHeading:
+      "Sideout shows the commercial and operational range I want my portfolio to have.",
+    closingCopy:
+      "It proves I can build beyond AI tooling into multi-surface software shaped by a real business, real pricing logic, and real customer behavior.",
+  },
+  {
+    ...projects[1],
     problem:
       "Students often get feedback that is either too vague to revise from, too grammar-only to improve the argument, or too AI-heavy to trust. I wanted a product that felt more like a structured writing coach than a detector or magic box.",
     audience:
@@ -425,7 +623,7 @@ export const caseStudies: ProjectCaseStudy[] = [
       "Shipping a demo-friendly fallback path matters almost as much as the main happy path for a portfolio project.",
       "AI features become more trustworthy when the surrounding UX explains the structure, confidence, and limitations clearly.",
       "The best student-facing product decisions in this build were about clarity and restraint, not about adding more model output.",
-      "For portfolio work, a good report UI can be just as important as the backend logic because it proves judgment in how results are presented.",
+      "DraftLens still matters in the portfolio because it shows a very different kind of judgment from Sideout: trust, structure, and believable AI-assisted workflow design.",
     ],
     buildNotes: [
       "The app supports DOCX uploads and text-based PDFs for a tighter v1 surface area.",
@@ -434,6 +632,14 @@ export const caseStudies: ProjectCaseStudy[] = [
       "The report surfaces use labels like matched, possible match, and not found to avoid overclaiming what the citation checks know.",
     ],
     screenshots: [draftLensLanding, draftLensDashboard, draftLensReport],
+    availabilityNote:
+      "The hosted demo is being refreshed, so the repo, case study, and screenshots are the clearest public references right now.",
+    screenshotIntro:
+      "I wanted the case study to show the product where the work is easiest to judge: positioning, the workspace, and the actual report UI.",
+    closingHeading:
+      "DraftLens still matters because it shows a different kind of product judgment.",
+    closingCopy:
+      "Where Sideout proves commercial and operational range, DraftLens proves that I can make AI-assisted workflows feel structured, credible, and worth trusting.",
   },
 ];
 

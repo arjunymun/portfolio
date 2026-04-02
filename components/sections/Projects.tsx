@@ -36,7 +36,7 @@ function ProjectActions({
 }
 
 export function Projects() {
-  const featured = projects.find((project) => project.featured);
+  const featured = projects.filter((project) => project.featured);
   const supporting = projects.filter((project) => !project.featured);
 
   return (
@@ -46,91 +46,187 @@ export function Projects() {
           <div className="max-w-3xl">
             <p className="section-eyebrow">Selected work</p>
             <h2 className="section-title mt-4 text-4xl font-semibold text-[var(--foreground)] sm:text-5xl">
-              One flagship project, plus the supporting work around it.
+              Two flagship case studies, each showing a different kind of product thinking.
             </h2>
             <p className="section-copy mt-4 max-w-2xl text-base leading-8">
-              DraftLens is the clearest example of how I like to build. The rest of the
-              shelf shows the systems thinking, iteration, and presentation work that support
-              it.
+              Sideout leads with real-world operations, commerce, and retention software for
+              a physical venue. DraftLens follows with trust-first AI workflow design. The
+              rest of the shelf shows the systems thinking and presentation work around those
+              two strongest lanes.
             </p>
           </div>
 
-          {featured ? (
-            <article className="surface-panel-dark overflow-hidden rounded-[2.2rem] p-6 sm:p-8">
-              <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="pill !border-white/10 !bg-white/4 !text-white/70">
-                        {featured.year}
-                      </span>
-                      <span className="pill !border-white/10 !bg-white/4 !text-white/70">
-                        {featured.status}
-                      </span>
-                    </div>
+          <div className="space-y-5">
+            {featured.map((project, index) => {
+              const isLead = index === 0;
 
-                    <p className="section-eyebrow mt-5 !text-[rgba(232,165,94,0.85)]">
-                      Featured case study
-                    </p>
-                    <h3 className="section-title mt-4 max-w-[11ch] text-[clamp(2.8rem,5vw,4.8rem)] font-semibold leading-[0.96] text-[var(--panel-dark-foreground)]">
-                      {featured.title}
-                    </h3>
-                    <p className="mt-4 text-sm uppercase tracking-[0.18em] text-white/48">
-                      {featured.kicker}
-                    </p>
-                    <p className="mt-5 max-w-xl text-base leading-8 text-white/72">
-                      {featured.summary}
-                    </p>
-                  </div>
+              return (
+                <article
+                  key={project.slug}
+                  className={
+                    isLead
+                      ? "surface-panel-dark overflow-hidden rounded-[2.2rem] p-6 sm:p-8"
+                      : "surface-panel-strong overflow-hidden rounded-[2.2rem] p-6 sm:p-8"
+                  }
+                >
+                  <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
+                    <div className="flex flex-col justify-between">
+                      <div>
+                        <div className="flex flex-wrap gap-2">
+                          <span
+                            className={
+                              isLead
+                                ? "pill !border-white/10 !bg-white/4 !text-white/70"
+                                : "pill !bg-[var(--background-strong)]"
+                            }
+                          >
+                            {project.year}
+                          </span>
+                          <span
+                            className={
+                              isLead
+                                ? "pill !border-white/10 !bg-white/4 !text-white/70"
+                                : "pill !bg-[var(--background-strong)]"
+                            }
+                          >
+                            {project.status}
+                          </span>
+                        </div>
 
-                  <div className="mt-8">
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <article className="rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4">
-                        <p className="section-eyebrow !text-white/45">Role</p>
-                        <p className="mt-3 text-sm leading-6 text-white/76">{featured.role}</p>
-                      </article>
-                      <article className="rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4">
-                        <p className="section-eyebrow !text-white/45">Why it matters</p>
-                        <p className="mt-3 text-sm leading-6 text-white/76">
-                          {featured.takeaway}
-                        </p>
-                      </article>
-                    </div>
-
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {featured.stack.map((item) => (
-                        <span
-                          key={item}
-                          className="pill !border-white/10 !bg-white/4 !text-white/70"
+                        <p
+                          className={
+                            isLead
+                              ? "section-eyebrow mt-5 !text-[rgba(232,165,94,0.85)]"
+                              : "section-eyebrow mt-5"
+                          }
                         >
-                          {item}
-                        </span>
-                      ))}
+                          {isLead ? "Lead flagship" : "Second flagship"}
+                        </p>
+                        <h3
+                          className={
+                            isLead
+                              ? "section-title mt-4 max-w-[11ch] text-[clamp(2.8rem,5vw,4.8rem)] font-semibold leading-[0.96] text-[var(--panel-dark-foreground)]"
+                              : "section-title mt-4 max-w-[11ch] text-[clamp(2.6rem,4.5vw,4.4rem)] font-semibold leading-[0.97] text-[var(--foreground)]"
+                          }
+                        >
+                          {project.title}
+                        </h3>
+                        <p
+                          className={
+                            isLead
+                              ? "mt-4 text-sm uppercase tracking-[0.18em] text-white/48"
+                              : "mt-4 text-sm uppercase tracking-[0.18em] text-[var(--foreground-muted)]"
+                          }
+                        >
+                          {project.kicker}
+                        </p>
+                        <p
+                          className={
+                            isLead
+                              ? "mt-5 max-w-xl text-base leading-8 text-white/72"
+                              : "mt-5 max-w-xl text-base leading-8 text-[var(--foreground-soft)]"
+                          }
+                        >
+                          {project.summary}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <article
+                            className={
+                              isLead
+                                ? "rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4"
+                                : "rounded-[1.25rem] border border-[var(--border)] bg-[var(--background-strong)] px-4 py-4"
+                            }
+                          >
+                            <p className={isLead ? "section-eyebrow !text-white/45" : "section-eyebrow"}>
+                              Role
+                            </p>
+                            <p
+                              className={
+                                isLead
+                                  ? "mt-3 text-sm leading-6 text-white/76"
+                                  : "mt-3 text-sm leading-6 text-[var(--foreground-soft)]"
+                              }
+                            >
+                              {project.role}
+                            </p>
+                          </article>
+                          <article
+                            className={
+                              isLead
+                                ? "rounded-[1.25rem] border border-white/8 bg-white/4 px-4 py-4"
+                                : "rounded-[1.25rem] border border-[var(--border)] bg-[var(--background-strong)] px-4 py-4"
+                            }
+                          >
+                            <p className={isLead ? "section-eyebrow !text-white/45" : "section-eyebrow"}>
+                              Why it matters
+                            </p>
+                            <p
+                              className={
+                                isLead
+                                  ? "mt-3 text-sm leading-6 text-white/76"
+                                  : "mt-3 text-sm leading-6 text-[var(--foreground-soft)]"
+                              }
+                            >
+                              {project.takeaway}
+                            </p>
+                          </article>
+                        </div>
+
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {project.stack.map((item) => (
+                            <span
+                              key={item}
+                              className={
+                                isLead
+                                  ? "pill !border-white/10 !bg-white/4 !text-white/70"
+                                  : "pill !bg-[var(--background-strong)]"
+                              }
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+
+                        <ProjectActions links={project.links} />
+                      </div>
                     </div>
 
-                    <ProjectActions links={featured.links} />
+                    {project.image ? (
+                      <div className="flex flex-col gap-3">
+                        <div
+                          className={
+                            isLead
+                              ? "rounded-full border border-white/10 bg-white/4 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/55"
+                              : "rounded-full border border-[var(--border)] bg-[var(--background-strong)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--foreground-muted)]"
+                          }
+                        >
+                          Product surface preview
+                        </div>
+                        <div
+                          className={
+                            isLead
+                              ? "overflow-hidden rounded-[1.8rem] border border-white/10 bg-black/20 p-3 sm:p-4"
+                              : "overflow-hidden rounded-[1.8rem] border border-[var(--border)] bg-[var(--panel)] p-3 sm:p-4"
+                          }
+                        >
+                          <Image
+                            src={project.image.src}
+                            alt={project.image.alt}
+                            width={project.image.width}
+                            height={project.image.height}
+                            className="h-[26rem] w-full rounded-[1.25rem] object-cover object-top sm:h-[32rem] lg:h-[38rem]"
+                          />
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
-                </div>
-
-                {featured.image ? (
-                  <div className="flex flex-col gap-3">
-                    <div className="rounded-full border border-white/10 bg-white/4 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/55">
-                      Product surface preview
-                    </div>
-                    <div className="overflow-hidden rounded-[1.8rem] border border-white/10 bg-black/20 p-3 sm:p-4">
-                      <Image
-                        src={featured.image.src}
-                        alt={featured.image.alt}
-                        width={featured.image.width}
-                        height={featured.image.height}
-                        className="h-full w-full rounded-[1.25rem] object-cover object-top"
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            </article>
-          ) : null}
+                </article>
+              );
+            })}
+          </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
             {supporting.map((project) => (

@@ -43,11 +43,11 @@ export const site: SiteConfig = {
   email: "arjuny@mun.ca",
   github: "https://github.com/arjunymun",
   description:
-    "Portfolio of Arjun Yadav, a full-stack developer building product-shaped web apps with careful frontend craft, practical AI workflows, and strong case-study thinking.",
+    "Portfolio of Arjun Yadav, a full-stack developer building product-shaped web apps across real-world operations software, practical AI workflows, and strong case-study storytelling.",
   navigation: [
     { label: "Home", href: "/" },
     { label: "Work", href: "/#work" },
-    { label: "DraftLens", href: "/projects/draftlens" },
+    { label: "Sideout", href: "/projects/sideout" },
     { label: "Writing", href: "/blog" },
     { label: "Contact", href: "/#contact" },
   ],
@@ -55,19 +55,22 @@ export const site: SiteConfig = {
     { label: "GitHub", href: "https://github.com/arjunymun", external: true },
     { label: "Email", href: "mailto:arjuny@mun.ca", external: true },
     {
-      label: "DraftLens Repo",
-      href: "https://github.com/arjunymun/essay-feedback-app",
+      label: "Sideout Live",
+      href: "https://pickleball-xi.vercel.app/",
       external: true,
     },
   ],
   seo: {
     title: "Arjun Yadav | Full-stack Developer",
     description:
-      "Editorial portfolio and case-study site for Arjun Yadav, featuring DraftLens, a student-facing writing feedback product built with Next.js, Supabase, and OpenAI.",
+      "Editorial portfolio and case-study site for Arjun Yadav, featuring Sideout and DraftLens: two flagship products spanning venue operations software, customer retention systems, and trust-first AI workflows.",
     keywords: [
       "Arjun Yadav",
       "full-stack developer",
       "Next.js portfolio",
+      "Sideout",
+      "pickleball club software",
+      "venue operations software",
       "DraftLens",
       "essay feedback app",
       "TypeScript",

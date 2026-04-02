@@ -9,9 +9,9 @@ export default function ProjectNotFound() {
           That case study is not available yet.
         </h1>
         <p className="section-copy text-base leading-8">
-          I&apos;m still turning the strongest work into proper write-ups. The DraftLens case
-          study is live, and more projects will follow once they are ready to hold up to the
-          same standard.
+          I&apos;m still turning the strongest work into proper write-ups. The Sideout and
+          DraftLens case studies are live, and more projects will follow once they are ready
+          to hold up to the same standard.
         </p>
         <Link
           href="/#work"

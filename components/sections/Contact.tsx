@@ -18,8 +18,8 @@ export function Contact() {
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
                   I care about building things that feel thoughtful and review well. If you
-                  want to chat about DraftLens, frontend product work, or an opportunity
-                  where that mindset is useful, I&apos;d be glad to connect.
+                  want to chat about Sideout, DraftLens, frontend product work, or an
+                  opportunity where that mindset is useful, I&apos;d be glad to connect.
                 </p>
               </div>
 
@@ -38,13 +38,13 @@ export function Contact() {
                   GitHub profile
                 </a>
                 <a
-                  href="https://github.com/arjunymun/essay-feedback-app"
+                  href="https://pickleball-xi.vercel.app/"
                   target="_blank"
                   rel="noreferrer"
                   className="secondary-button !border-white/12 !bg-white/4 !text-white/80 hover:!text-white"
                 >
                   <ArrowUpRight className="h-4 w-4" />
-                  DraftLens repository
+                  Sideout live product
                 </a>
               </div>
             </div>

@@ -13,9 +13,9 @@ export function About() {
             </h2>
             <p className="section-copy max-w-xl text-base leading-8">
               My favorite builds are the ones where the interface, the backend choices, and
-              the written story all reinforce each other. DraftLens pushed me in that
-              direction, and this portfolio refresh is really about presenting that work with
-              more clarity and more taste.
+              the written story all reinforce each other. DraftLens pushed me toward
+              trust-first workflow design, while Sideout pushed me toward commercial and
+              operational software shaped by a real business.
             </p>
             <p className="section-copy max-w-xl text-base leading-8">
               With a bachelor&apos;s in computer science from Memorial University of

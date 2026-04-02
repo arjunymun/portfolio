@@ -66,8 +66,8 @@ export default function Image() {
                 color: "#4a413b",
               }}
             >
-              Full-stack developer building thoughtful web products with strong
-              frontend craft, practical AI workflows, and product-minded systems.
+              Full-stack developer building thoughtful web products across real-world
+              operations software, practical AI workflows, and product-minded systems.
             </div>
           </div>
 
@@ -80,7 +80,7 @@ export default function Image() {
               color: "#4a413b",
             }}
           >
-            <div>Featuring DraftLens, a student-facing writing feedback product</div>
+            <div>Featuring Sideout and DraftLens, two flagship case studies</div>
             <div style={{ color: "#0b4f49", fontWeight: 700 }}>arjunymun</div>
           </div>
         </div>

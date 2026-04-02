@@ -97,16 +97,14 @@ export function Hero() {
             </div>
 
             <div className="relative mt-6 overflow-hidden rounded-[1.6rem] border border-white/8 bg-black/20 p-3 sm:p-4">
-              <div className="floating-note">
-                Demo-ready walkthrough
-              </div>
+              <div className="floating-note">{hero.preview.badge}</div>
               <Image
                 src={hero.preview.imageSrc}
                 alt={hero.preview.imageAlt}
-                width={1440}
-                height={1600}
+                width={hero.preview.imageWidth}
+                height={hero.preview.imageHeight}
                 priority
-                className="h-auto w-full rounded-[1.15rem] object-cover object-top"
+                className="h-[26rem] w-full rounded-[1.15rem] object-cover object-top sm:h-[30rem] lg:h-[34rem]"
               />
             </div>
           </div>

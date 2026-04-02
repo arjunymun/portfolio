@@ -4,11 +4,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Mail } from "lucide-react";
 
-import { getCaseStudyBySlug } from "@/lib/content";
+import { caseStudies, getCaseStudyBySlug } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export function generateStaticParams() {
-  return [{ slug: "draftlens" }];
+  return caseStudies.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({
@@ -47,6 +47,9 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getCaseStudyBySlug(slug);
+  const repoLink =
+    project?.links.find((link) => link.external && /repo/i.test(link.label)) ??
+    project?.links.find((link) => link.external);
 
   if (!project) {
     notFound();
@@ -78,10 +81,11 @@ export default async function ProjectPage({
               <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
                 {project.summary}
               </p>
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-white/60">
-                The hosted demo is being refreshed, so the repo, case study, and screenshots
-                are the clearest public references right now.
-              </p>
+              {project.availabilityNote ? (
+                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/60">
+                  {project.availabilityNote}
+                </p>
+              ) : null}
 
               <div className="mt-7 flex flex-wrap gap-3">
                 {project.links
@@ -133,7 +137,7 @@ export default async function ProjectPage({
             alt={project.screenshots[0].alt}
             width={project.screenshots[0].width}
             height={project.screenshots[0].height}
-            className="h-auto w-full object-cover"
+            className="h-[26rem] w-full object-cover object-top sm:h-[36rem] lg:h-[44rem]"
             priority
           />
         </section>
@@ -157,7 +161,7 @@ export default async function ProjectPage({
           <div>
             <p className="section-eyebrow">Product workflow</p>
             <h2 className="section-title mt-4 text-3xl font-semibold text-[var(--foreground)] sm:text-4xl">
-              The product needed to feel usable, credible, and easy to explain.
+              The product needed to feel coherent, valuable, and easy to explain.
             </h2>
             <p className="section-copy mt-4 text-base leading-8">
               {project.solutionSummary}
@@ -207,8 +211,8 @@ export default async function ProjectPage({
               </h2>
             </div>
             <p className="section-copy max-w-xl text-sm leading-7">
-              I wanted the case study to show the product where the work is easiest to judge:
-              positioning, the workspace, and the actual report UI.
+              {project.screenshotIntro ??
+                "I wanted the case study to show the product where the work is easiest to judge: the live surfaces, the working core workflow, and the interface decisions that carry the story."}
             </p>
           </div>
 
@@ -224,7 +228,7 @@ export default async function ProjectPage({
                     alt={shot.alt}
                     width={shot.width}
                     height={shot.height}
-                    className="h-auto w-full object-cover"
+                    className="h-[20rem] w-full object-cover object-top sm:h-[24rem] lg:h-[28rem]"
                   />
                 </div>
                 <figcaption className="section-copy px-2 pb-1 pt-4 text-sm leading-7">
@@ -272,27 +276,29 @@ export default async function ProjectPage({
                 Next step
               </p>
               <h2 className="section-title mt-4 text-3xl font-semibold text-[var(--panel-dark-foreground)] sm:text-4xl">
-                DraftLens is the project I want more of in my portfolio: ambitious enough to
-                matter, but still shaped carefully.
+                {project.closingHeading ??
+                  `${project.title} is the kind of product work I want more of in my portfolio.`}
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68">
-                If this kind of product thinking and implementation range is useful to your
-                team, I&apos;d love to connect.
+                {project.closingCopy ??
+                  "If this kind of product thinking and implementation range is useful to your team, I'd love to connect."}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <Link href="/#contact" className="primary-button">
                 Get in touch
               </Link>
-              <a
-                href="https://github.com/arjunymun/essay-feedback-app"
-                target="_blank"
-                rel="noreferrer"
-                className="secondary-button !border-white/10 !bg-white/4 !text-white/80 hover:!text-white"
-              >
-                View repo
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
+              {repoLink ? (
+                <a
+                  href={repoLink.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="secondary-button !border-white/10 !bg-white/4 !text-white/80 hover:!text-white"
+                >
+                  {repoLink.label}
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              ) : null}
             </div>
           </div>
         </section>

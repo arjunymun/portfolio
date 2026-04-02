@@ -20,8 +20,8 @@ export function Footer() {
                 I&apos;m aiming for product work that feels careful, credible, and easy to trust.
               </h2>
               <p className="section-copy mt-4 max-w-xl text-base leading-8">
-                {site.availability} If DraftLens or the way this portfolio is structured feels
-                like a good fit for your team, I&apos;d love to talk.
+                {site.availability} If Sideout, DraftLens, or the way this portfolio is
+                structured feels like a good fit for your team, I&apos;d love to talk.
               </p>
             </div>
 
