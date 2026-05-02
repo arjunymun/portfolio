@@ -1,21 +1,17 @@
-import { About } from "@/components/sections/About";
-import { Contact } from "@/components/sections/Contact";
-import { Experience } from "@/components/sections/Experience";
-import { Hero } from "@/components/sections/Hero";
-import { Projects } from "@/components/sections/Projects";
-import { ProofStrip } from "@/components/sections/ProofStrip";
-import { Writing } from "@/components/sections/Writing";
+import { CaseStudyTunnel } from "@/components/sections/v2/CaseStudyTunnel";
+import { CinematicHero } from "@/components/sections/v2/CinematicHero";
+import { FinalContact } from "@/components/sections/v2/FinalContact";
+import { ProductUniverse } from "@/components/sections/v2/ProductUniverse";
+import { ProofCockpit } from "@/components/sections/v2/ProofCockpit";
 
 export default function Home() {
   return (
     <main>
-      <Hero />
-      <ProofStrip />
-      <Projects />
-      <About />
-      <Experience />
-      <Writing />
-      <Contact />
+      <CinematicHero />
+      <ProductUniverse />
+      <CaseStudyTunnel />
+      <ProofCockpit />
+      <FinalContact />
     </main>
   );
 }

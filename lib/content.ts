@@ -68,6 +68,12 @@ export interface ProjectOutcome {
   detail: string;
 }
 
+export interface ExecutiveProof {
+  label: string;
+  value: string;
+  detail: string;
+}
+
 export interface ProjectSummary {
   slug: string;
   title: string;
@@ -85,6 +91,7 @@ export interface ProjectSummary {
 }
 
 export interface ProjectCaseStudy extends ProjectSummary {
+  executiveSummary: ExecutiveProof[];
   problem: string;
   audience: string;
   challenge: string;
@@ -102,6 +109,18 @@ export interface ProjectCaseStudy extends ProjectSummary {
   screenshotIntro?: string;
   closingHeading?: string;
   closingCopy?: string;
+}
+
+export interface CinemaProof {
+  label: string;
+  value: string;
+  detail: string;
+}
+
+export interface UniverseNode {
+  label: string;
+  detail: string;
+  tone: "teal" | "amber" | "rose" | "violet" | "steel";
 }
 
 export const hero: HeroContent = {
@@ -176,6 +195,81 @@ export const proofItems: ProofItem[] = [
     value: "Work that holds up in review",
     description:
       "The goal is not just shipping code, but shipping projects that stand up to real product questions.",
+  },
+];
+
+export const cinemaHero = {
+  eyebrow: "Full-stack product cinema",
+  title: "I turn product ideas into systems you can feel.",
+  intro:
+    "Arjun Yadav is a full-stack developer building polished, reviewable products across venue operations and trust-first AI workflows.",
+  signal: "Sideout + DraftLens are the proof: two flagship builds, real workflows, fewer empty claims.",
+  chips: ["Next.js 16", "TypeScript", "Supabase", "OpenAI", "Stripe", "PWA"],
+};
+
+export const cinemaProof: CinemaProof[] = [
+  {
+    label: "Live scope",
+    value: "3 product surfaces",
+    detail: "Sideout covers public marketing, customer flows, and operator workflows.",
+  },
+  {
+    label: "Business logic",
+    value: "Bookings to credits",
+    detail: "Venue value is modeled through packs, memberships, offers, wallet credits, and approvals.",
+  },
+  {
+    label: "AI workflow",
+    value: "Upload to report",
+    detail: "DraftLens turns essays into structured feedback, citation signals, saved history, and rewrites.",
+  },
+  {
+    label: "Backend posture",
+    value: "Auth, data, APIs",
+    detail: "Both flagships are shaped around persistence, runtime behavior, and deployment constraints.",
+  },
+  {
+    label: "Frontend craft",
+    value: "Cinematic UX",
+    detail: "The portfolio itself is now built as a product surface, not a pile of paragraphs.",
+  },
+  {
+    label: "Career target",
+    value: "Junior product engineer",
+    detail: "Open to internships, junior engineering roles, and teams that value taste plus execution.",
+  },
+];
+
+export const universeNodes: UniverseNode[] = [
+  {
+    label: "Sideout",
+    detail: "Venue OS",
+    tone: "teal",
+  },
+  {
+    label: "DraftLens",
+    detail: "AI writing workflow",
+    tone: "violet",
+  },
+  {
+    label: "Commerce",
+    detail: "Stripe, packs, memberships",
+    tone: "amber",
+  },
+  {
+    label: "Data",
+    detail: "Supabase auth and records",
+    tone: "steel",
+  },
+  {
+    label: "Trust",
+    detail: "Citations, fallback, privacy",
+    tone: "rose",
+  },
+  {
+    label: "Interface",
+    detail: "Product-grade frontends",
+    tone: "teal",
   },
 ];
 
@@ -440,9 +534,31 @@ export const projects: ProjectSummary[] = [
   },
 ];
 
+export const homepageFlagships = projects.filter((project) => project.featured);
+
 export const caseStudies: ProjectCaseStudy[] = [
   {
     ...projects[0],
+    executiveSummary: [
+      {
+        label: "Built",
+        value: "A multi-surface venue operating system",
+        detail:
+          "Marketing, booking, wallet value, memberships, offers, and operator workflows live in one product story.",
+      },
+      {
+        label: "Technical surface",
+        value: "Next.js 16, Supabase, Stripe, PWA",
+        detail:
+          "The system is structured around auth, shared domain data, commerce scaffolding, and installable customer behavior.",
+      },
+      {
+        label: "Strongest proof",
+        value: "It models the business, not just the schedule",
+        detail:
+          "Repeat play, manual approvals, credits, inactive customers, and operator nudges are treated as core product behavior.",
+      },
+    ],
     problem:
       "Single-venue clubs do not just sell open court time. They sell habits, member value, better repeat behavior, and reasons to come back. A simple booking layer was not enough to reflect how a real venue actually runs.",
     audience:
@@ -546,6 +662,26 @@ export const caseStudies: ProjectCaseStudy[] = [
   },
   {
     ...projects[1],
+    executiveSummary: [
+      {
+        label: "Built",
+        value: "A trust-first academic feedback workflow",
+        detail:
+          "Upload, parsing, rubric scoring, citation confidence, report history, and rewrite support work as one journey.",
+      },
+      {
+        label: "Technical surface",
+        value: "Next.js 16, Supabase, OpenAI, external metadata checks",
+        detail:
+          "The product combines app routes, auth, persistence, AI-assisted analysis, fallback behavior, and source checks.",
+      },
+      {
+        label: "Strongest proof",
+        value: "AI output becomes usable product UI",
+        detail:
+          "The report is structured into scores, priorities, citations, and revision actions instead of a vague generated blob.",
+      },
+    ],
     problem:
       "Students often get feedback that is either too vague to revise from, too grammar-only to improve the argument, or too AI-heavy to trust. I wanted a product that felt more like a structured writing coach than a detector or magic box.",
     audience:
