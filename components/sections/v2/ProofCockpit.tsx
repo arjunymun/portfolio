@@ -2,8 +2,9 @@ import { cinemaProof } from "@/lib/content";
 
 export function ProofCockpit() {
   return (
-    <section className="border-b border-[var(--border)] bg-[var(--background-strong)] py-16 sm:py-20">
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+    <section className="cosmic-section relative isolate overflow-hidden border-b border-[var(--border)] py-16 sm:py-20">
+      <div className="spectral-code opacity-40" aria-hidden />
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid gap-4 lg:grid-cols-[0.65fr_1.35fr]">
           <div>
             <p className="font-mono text-xs uppercase text-[var(--warm)]">Proof cockpit</p>

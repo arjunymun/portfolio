@@ -24,7 +24,7 @@ function ProjectChapter({ project, index }: { project: ProjectSummary; index: nu
   return (
     <section
       ref={ref}
-      className="relative min-h-[110svh] border-b border-[var(--border)] py-16 sm:py-20"
+      className="relative z-10 min-h-[110svh] border-b border-[var(--border)] py-16 sm:py-20"
     >
       <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-10">
         <div className="lg:sticky lg:top-28 lg:h-fit">
@@ -118,8 +118,9 @@ function ProjectChapter({ project, index }: { project: ProjectSummary; index: nu
 
 export function CaseStudyTunnel() {
   return (
-    <section id="work" className="bg-[var(--background)]">
-      <div className="mx-auto max-w-7xl px-5 pb-4 pt-20 sm:px-8 sm:pt-24 lg:px-10">
+    <section id="work" className="cosmic-section relative isolate overflow-hidden">
+      <div className="spectral-code opacity-45" aria-hidden />
+      <div className="relative z-10 mx-auto max-w-7xl px-5 pb-4 pt-20 sm:px-8 sm:pt-24 lg:px-10">
         <p className="font-mono text-xs uppercase text-[var(--warm)]">Case study tunnel</p>
         <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-none text-[var(--foreground)] sm:text-6xl">
           Two flagship systems. No filler shelf.

@@ -35,6 +35,7 @@ export function CinematicHero() {
     >
       <div className="cinema-grid absolute inset-0" aria-hidden />
       <div className="cinema-noise absolute inset-0" aria-hidden />
+      <div className="spectral-code opacity-70" aria-hidden />
 
       <motion.div
         className="pointer-events-none absolute inset-y-10 right-[-9rem] hidden w-[56rem] max-w-[62vw] items-center justify-center lg:flex"

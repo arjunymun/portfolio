@@ -58,8 +58,9 @@ export default async function ProjectPage({
   const liveLink = project.links.find((link) => link.external && !/repo/i.test(link.label));
 
   return (
-    <main className="bg-[var(--background)]">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+    <main className="cosmic-section relative z-10 overflow-hidden">
+      <div className="spectral-code opacity-35" aria-hidden />
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
         <Link
           href="/#work"
           className="inline-flex w-fit items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--panel)] px-3 py-2 text-sm font-medium text-[var(--accent-strong)] transition hover:border-[var(--border-strong)]"
@@ -70,6 +71,7 @@ export default async function ProjectPage({
 
         <section className="relative overflow-hidden rounded-lg border border-white/10 bg-[#0d0b0a] p-5 text-white shadow-[0_40px_140px_rgba(0,0,0,0.32)] sm:p-8">
           <div className="cinema-grid absolute inset-0 opacity-70" aria-hidden />
+          <div className="spectral-code opacity-60" aria-hidden />
           <div className="relative z-10 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
             <div>
               <p className="font-mono text-xs uppercase text-[#e8a55e]">{project.kicker}</p>
@@ -243,8 +245,9 @@ export default async function ProjectPage({
           </div>
         </section>
 
-        <section className="rounded-lg border border-white/10 bg-[#0d0b0a] p-6 text-white sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <section className="relative overflow-hidden rounded-lg border border-white/10 bg-[#0d0b0a]/90 p-6 text-white sm:p-8">
+          <div className="cinema-grid absolute inset-0 opacity-45" aria-hidden />
+          <div className="relative z-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="font-mono text-xs uppercase text-[#e8a55e]">Next step</p>
               <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-none text-[#fff7ea]">

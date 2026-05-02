@@ -5,9 +5,10 @@ export function ProductUniverse() {
   return (
     <section
       id="universe"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[#0d0b0a] py-20 text-white sm:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-[#0d0b0a]/88 py-20 text-white sm:py-24"
     >
       <div className="cinema-grid absolute inset-0 opacity-60" aria-hidden />
+      <div className="spectral-code opacity-80" aria-hidden />
       <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.58fr_1.42fr] lg:px-10">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="font-mono text-xs uppercase text-[#e8a55e]">Product universe</p>

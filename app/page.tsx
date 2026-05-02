@@ -6,7 +6,7 @@ import { ProofCockpit } from "@/components/sections/v2/ProofCockpit";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative z-10">
       <CinematicHero />
       <ProductUniverse />
       <CaseStudyTunnel />

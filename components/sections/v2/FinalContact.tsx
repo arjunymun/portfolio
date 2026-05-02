@@ -4,8 +4,13 @@ import { site } from "@/lib/site";
 
 export function FinalContact() {
   return (
-    <section id="contact" className="bg-[#0d0b0a] px-5 py-20 text-white sm:px-8 sm:py-24 lg:px-10">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+    <section
+      id="contact"
+      className="relative isolate overflow-hidden bg-[#0d0b0a]/88 px-5 py-20 text-white sm:px-8 sm:py-24 lg:px-10"
+    >
+      <div className="cinema-grid absolute inset-0 opacity-45" aria-hidden />
+      <div className="spectral-code opacity-75" aria-hidden />
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
         <div>
           <p className="font-mono text-xs uppercase text-[#e8a55e]">Contact</p>
           <h2 className="mt-4 max-w-4xl font-display text-5xl font-semibold leading-none text-[#fff7ea] sm:text-7xl">

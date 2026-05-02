@@ -82,6 +82,99 @@ function DataNode({
   );
 }
 
+function SingularityCore() {
+  const core = useRef<THREE.Group>(null);
+  const glyphs = ["type", "λ", "Σ", "0x", "io"];
+
+  useFrame(({ clock }) => {
+    if (!core.current) {
+      return;
+    }
+
+    const elapsed = clock.getElapsedTime();
+    core.current.rotation.y = elapsed * 0.2;
+    core.current.rotation.z = Math.sin(elapsed * 0.18) * 0.14;
+  });
+
+  return (
+    <group ref={core}>
+      <mesh>
+        <sphereGeometry args={[0.34, 64, 64]} />
+        <meshBasicMaterial color="#020206" />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[0.47, 64, 64]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#45b7ad"
+          transparent
+          opacity={0.1}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.68, 0.025, 16, 160]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#ffd29a"
+          transparent
+          opacity={0.48}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh rotation={[1.18, 0.36, 0.2]}>
+        <torusGeometry args={[0.92, 0.01, 12, 160]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#9af5ed"
+          transparent
+          opacity={0.28}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh position={[0, 0.92, 0]} rotation={[0, 0, 0]}>
+        <coneGeometry args={[0.055, 1.72, 36, 1, true]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#d8ccff"
+          transparent
+          opacity={0.18}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh position={[0, -0.92, 0]} rotation={[Math.PI, 0, 0]}>
+        <coneGeometry args={[0.055, 1.72, 36, 1, true]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#ffb0bd"
+          transparent
+          opacity={0.14}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {glyphs.map((glyph, index) => {
+        const angle = (index / glyphs.length) * Math.PI * 2;
+        return (
+          <Text
+            key={glyph}
+            position={[Math.cos(angle) * 1.18, Math.sin(angle) * 0.22, Math.sin(angle) * 1.18]}
+            rotation={[0, -angle + Math.PI / 2, 0]}
+            fontSize={0.082}
+            anchorX="center"
+            anchorY="middle"
+            color="#f7efe2"
+            outlineWidth={0.002}
+            outlineColor="#050506"
+          >
+            {glyph}
+          </Text>
+        );
+      })}
+    </group>
+  );
+}
+
 function ProductGraph({ nodes }: ProductUniverseCanvasProps) {
   const group = useRef<THREE.Group>(null);
   const { size } = useThree();
@@ -114,9 +207,27 @@ function ProductGraph({ nodes }: ProductUniverseCanvasProps) {
 
   return (
     <group ref={group} scale={graphScale}>
+      <SingularityCore />
+
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -1.18, 0]}>
         <ringGeometry args={[0.68, 2.2, 128]} />
-        <meshBasicMaterial color="#45b7ad" transparent opacity={0.09} side={THREE.DoubleSide} />
+        <meshBasicMaterial
+          color="#45b7ad"
+          transparent
+          opacity={0.12}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+      <mesh rotation={[1.25, 0.12, 0.4]} position={[0, -0.06, 0]}>
+        <ringGeometry args={[1.08, 2.62, 160]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#e8a55e"
+          transparent
+          opacity={0.035}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
       </mesh>
 
       {connectionPairs.map(([from, to]) => (
