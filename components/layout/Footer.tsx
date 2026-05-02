@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Github, Mail } from "lucide-react";
+import { ArrowUpRight, Download, Github, Mail } from "lucide-react";
 
 import { site } from "@/lib/site";
 
@@ -10,59 +10,56 @@ const iconByLabel = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] pb-12 pt-14">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 sm:px-8 lg:px-10">
-        <div className="surface-panel rounded-[2rem] px-6 py-8 sm:px-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="section-eyebrow">Closing note</p>
-              <h2 className="section-title mt-3 text-3xl font-semibold text-[var(--foreground)] sm:text-4xl">
-                I&apos;m aiming for product work that feels careful, credible, and easy to trust.
-              </h2>
-              <p className="section-copy mt-4 max-w-xl text-base leading-8">
-                {site.availability} If Sideout, DraftLens, or the way this portfolio is
-                structured feels like a good fit for your team, I&apos;d love to talk.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {site.socialLinks.map((link) => {
-                const Icon =
-                  iconByLabel[link.label as keyof typeof iconByLabel] ?? ArrowUpRight;
-
-                return link.external ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="secondary-button"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link key={link.href} href={link.href} className="secondary-button">
-                    <Icon className="h-4 w-4" />
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3 text-sm text-[var(--foreground-muted)] sm:flex-row sm:items-center sm:justify-between">
+    <footer className="border-t border-white/10 bg-[#0d0b0a] pb-10 pt-8 text-white">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 sm:px-8 lg:px-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            (c) {new Date().getFullYear()} {site.name}. Built with Next.js, TypeScript, and a
-            stronger respect for case-study clarity.
+            (c) {new Date().getFullYear()} {site.name}. Cinematic product portfolio.
           </p>
-          <Link
-            href="/blog"
-            className="text-[var(--accent-strong)] transition hover:underline hover:underline-offset-4"
-          >
-            Read the writing log
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            {site.socialLinks.map((link) => {
+              const Icon =
+                iconByLabel[link.label as keyof typeof iconByLabel] ?? ArrowUpRight;
+
+              return link.external ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/6 px-3 py-2 text-sm text-white/64 transition hover:text-white"
+                >
+                  <Icon className="h-4 w-4" />
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/6 px-3 py-2 text-sm text-white/64 transition hover:text-white"
+                >
+                  <Icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              );
+            })}
+            <a
+              href={site.resume.href}
+              target={site.resume.external ? "_blank" : undefined}
+              rel={site.resume.external ? "noreferrer" : undefined}
+              download={site.resume.external ? undefined : site.resume.downloadName}
+              className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/6 px-3 py-2 text-sm text-white/64 transition hover:text-[#e8a55e]"
+            >
+              <Download className="h-4 w-4" />
+              Resume
+            </a>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/6 px-3 py-2 text-sm text-white/64 transition hover:text-white"
+            >
+              Writing
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

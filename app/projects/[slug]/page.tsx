@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail } from "lucide-react";
 
 import { caseStudies, getCaseStudyBySlug } from "@/lib/content";
 import { site } from "@/lib/site";
@@ -47,156 +47,144 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getCaseStudyBySlug(slug);
-  const repoLink =
-    project?.links.find((link) => link.external && /repo/i.test(link.label)) ??
-    project?.links.find((link) => link.external);
 
   if (!project) {
     notFound();
   }
 
+  const repoLink =
+    project.links.find((link) => link.external && /repo/i.test(link.label)) ??
+    project.links.find((link) => link.external);
+  const liveLink = project.links.find((link) => link.external && !/repo/i.test(link.label));
+
   return (
-    <main className="py-14 sm:py-20">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 sm:px-8 lg:px-10">
+    <main className="bg-[var(--background)]">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
         <Link
           href="/#work"
-          className="inline-flex w-fit items-center gap-2 text-sm font-medium text-[var(--accent-strong)] transition hover:underline hover:underline-offset-4"
+          className="inline-flex w-fit items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--panel)] px-3 py-2 text-sm font-medium text-[var(--accent-strong)] transition hover:border-[var(--border-strong)]"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to selected work
+          Back to work
         </Link>
 
-        <section className="surface-panel-dark rounded-[2.25rem] p-6 sm:p-8">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <section className="relative overflow-hidden rounded-lg border border-white/10 bg-[#0d0b0a] p-5 text-white shadow-[0_40px_140px_rgba(0,0,0,0.32)] sm:p-8">
+          <div className="cinema-grid absolute inset-0 opacity-70" aria-hidden />
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
             <div>
-              <p className="section-eyebrow !text-[rgba(232,165,94,0.85)]">
-                {project.kicker}
-              </p>
-              <h1 className="section-title mt-4 text-4xl font-semibold text-[var(--panel-dark-foreground)] sm:text-6xl">
+              <p className="font-mono text-xs uppercase text-[#e8a55e]">{project.kicker}</p>
+              <h1 className="mt-4 font-display text-5xl font-semibold leading-none text-[#fff7ea] sm:text-7xl">
                 {project.title}
               </h1>
-              <p className="mt-3 text-sm uppercase tracking-[0.18em] text-white/48">
+              <p className="mt-4 font-mono text-xs uppercase leading-6 text-white/42">
                 {project.role}
               </p>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
+              <p className="mt-5 max-w-2xl text-base leading-8 text-white/68">
                 {project.summary}
               </p>
-              {project.availabilityNote ? (
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/60">
-                  {project.availabilityNote}
-                </p>
-              ) : null}
-
               <div className="mt-7 flex flex-wrap gap-3">
-                {project.links
-                  .filter((link) => link.external)
-                  .map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="secondary-button !border-white/10 !bg-white/4 !text-white/80 hover:!text-white"
-                    >
-                      {link.label}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  ))}
+                {liveLink ? (
+                  <a
+                    href={liveLink.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="primary-button"
+                  >
+                    {liveLink.label}
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                ) : null}
+                {repoLink ? (
+                  <a
+                    href={repoLink.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="secondary-button !border-white/12 !bg-white/6 !text-white"
+                  >
+                    {repoLink.label}
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                ) : null}
                 <a
-                  href={`mailto:${site.email}`}
-                  className="secondary-button !border-white/10 !bg-white/4 !text-white/80 hover:!text-white"
+                  href={site.resume.href}
+                  target={site.resume.external ? "_blank" : undefined}
+                  rel={site.resume.external ? "noreferrer" : undefined}
+                  download={site.resume.external ? undefined : site.resume.downloadName}
+                  className="secondary-button !border-white/12 !bg-white/6 !text-white/82 hover:!text-[#e8a55e]"
                 >
-                  <Mail className="h-4 w-4" />
-                  Contact me
+                  <Download className="h-4 w-4" />
+                  Resume
                 </a>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {project.outcomes.map((item) => (
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {project.executiveSummary.map((item) => (
                 <article
                   key={item.label}
-                  className="rounded-[1.4rem] border border-white/8 bg-white/4 p-5"
+                  className="rounded-lg border border-white/10 bg-white/7 p-4 backdrop-blur"
                 >
-                  <p className="section-eyebrow !text-[rgba(232,165,94,0.85)]">
+                  <p className="font-mono text-[0.68rem] uppercase text-[#e8a55e]">
                     {item.label}
                   </p>
-                  <h2 className="mt-3 text-2xl font-semibold text-[var(--panel-dark-foreground)]">
+                  <h2 className="mt-3 font-display text-2xl font-semibold leading-tight text-white">
                     {item.value}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-white/65">{item.detail}</p>
+                  <p className="mt-3 text-sm leading-7 text-white/58">{item.detail}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[var(--panel-strong)] shadow-[var(--shadow)]">
+        <section className="overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--panel-strong)] p-3 shadow-[var(--shadow)]">
           <Image
             src={project.screenshots[0].src}
             alt={project.screenshots[0].alt}
             width={project.screenshots[0].width}
             height={project.screenshots[0].height}
-            className="h-[26rem] w-full object-cover object-top sm:h-[36rem] lg:h-[44rem]"
+            className="h-[28rem] w-full rounded-md object-cover object-top sm:h-[40rem] lg:h-[48rem]"
             priority
           />
         </section>
 
-        <section className="grid gap-4 lg:grid-cols-3">
-          <article className="surface-panel rounded-[1.75rem] p-6 lg:col-span-1">
-            <p className="section-eyebrow">Problem</p>
-            <p className="section-copy mt-4 text-sm leading-7">{project.problem}</p>
-          </article>
-          <article className="surface-panel rounded-[1.75rem] p-6 lg:col-span-1">
-            <p className="section-eyebrow">Audience</p>
-            <p className="section-copy mt-4 text-sm leading-7">{project.audience}</p>
-          </article>
-          <article className="surface-panel rounded-[1.75rem] p-6 lg:col-span-1">
-            <p className="section-eyebrow">Challenge</p>
-            <p className="section-copy mt-4 text-sm leading-7">{project.challenge}</p>
-          </article>
+        <section className="grid gap-3 lg:grid-cols-3">
+          {[
+            ["Problem", project.problem],
+            ["Audience", project.audience],
+            ["Challenge", project.challenge],
+          ].map(([label, copy]) => (
+            <article
+              key={label}
+              className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)]"
+            >
+              <p className="font-mono text-[0.68rem] uppercase text-[var(--warm)]">{label}</p>
+              <p className="mt-4 text-sm leading-7 text-[var(--foreground-soft)]">{copy}</p>
+            </article>
+          ))}
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
-          <div>
-            <p className="section-eyebrow">Product workflow</p>
-            <h2 className="section-title mt-4 text-3xl font-semibold text-[var(--foreground)] sm:text-4xl">
-              The product needed to feel coherent, valuable, and easy to explain.
+        <section className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-6">
+            <p className="font-mono text-xs uppercase text-[var(--warm)]">Product path</p>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-none text-[var(--foreground)]">
+              The story stays short; the scope stays visible.
             </h2>
-            <p className="section-copy mt-4 text-base leading-8">
+            <p className="mt-5 text-base leading-8 text-[var(--foreground-soft)]">
               {project.solutionSummary}
             </p>
           </div>
 
-          <div className="grid gap-4">
-            {project.workflow.map((step, index) => (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {project.workflow.slice(0, 4).map((step, index) => (
               <article
                 key={step}
-                className="surface-panel rounded-[1.4rem] px-5 py-4"
+                className="rounded-lg border border-[var(--border)] bg-[var(--background-strong)] p-4"
               >
-                <div className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] font-mono text-sm font-semibold text-[var(--accent-strong)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <p className="section-copy text-sm leading-7">{step}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <p className="section-eyebrow">Architecture</p>
-          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {project.architecture.map((item) => (
-              <article
-                key={item.title}
-                className="surface-panel rounded-[1.5rem] p-5"
-              >
-                <h2 className="section-title text-2xl font-semibold text-[var(--foreground)]">
-                  {item.title}
-                </h2>
-                <p className="section-copy mt-3 text-sm leading-7">{item.detail}</p>
+                <p className="font-mono text-[0.68rem] uppercase text-[var(--warm)]">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-3 text-sm leading-7 text-[var(--foreground-soft)]">{step}</p>
               </article>
             ))}
           </div>
@@ -205,33 +193,49 @@ export default async function ProjectPage({
         <section>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="section-eyebrow">Screenshots</p>
-              <h2 className="section-title mt-4 text-3xl font-semibold text-[var(--foreground)] sm:text-4xl">
-                Product surfaces that matter in the story.
+              <p className="font-mono text-xs uppercase text-[var(--warm)]">Architecture</p>
+              <h2 className="mt-4 font-display text-4xl font-semibold leading-none text-[var(--foreground)]">
+                Built as product infrastructure.
               </h2>
             </div>
-            <p className="section-copy max-w-xl text-sm leading-7">
-              {project.screenshotIntro ??
-                "I wanted the case study to show the product where the work is easiest to judge: the live surfaces, the working core workflow, and the interface decisions that carry the story."}
+            <p className="max-w-xl text-sm leading-7 text-[var(--foreground-soft)]">
+              The implementation details are grouped around what a reviewer can judge: runtime,
+              data, workflow, and credibility.
             </p>
           </div>
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {project.architecture.slice(0, 4).map((item) => (
+              <article
+                key={item.title}
+                className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)]"
+              >
+                <h3 className="font-display text-2xl font-semibold leading-tight text-[var(--foreground)]">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[var(--foreground-soft)]">
+                  {item.detail}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-          <div className="mt-6 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-            {project.screenshots.slice(1).map((shot) => (
+        <section>
+          <p className="font-mono text-xs uppercase text-[var(--warm)]">Surfaces</p>
+          <div className="mt-5 grid gap-4 lg:grid-cols-2">
+            {project.screenshots.slice(1, 5).map((shot) => (
               <figure
                 key={shot.src}
-                className="surface-panel overflow-hidden rounded-[1.75rem] p-3"
+                className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--panel)] p-3 shadow-[var(--shadow-soft)]"
               >
-                <div className="overflow-hidden rounded-[1.2rem] border border-[var(--border)]">
-                  <Image
-                    src={shot.src}
-                    alt={shot.alt}
-                    width={shot.width}
-                    height={shot.height}
-                    className="h-[20rem] w-full object-cover object-top sm:h-[24rem] lg:h-[28rem]"
-                  />
-                </div>
-                <figcaption className="section-copy px-2 pb-1 pt-4 text-sm leading-7">
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  width={shot.width}
+                  height={shot.height}
+                  className="h-[22rem] w-full rounded-md object-cover object-top sm:h-[28rem]"
+                />
+                <figcaption className="px-1 pb-1 pt-4 text-sm leading-7 text-[var(--foreground-soft)]">
                   {shot.caption}
                 </figcaption>
               </figure>
@@ -239,66 +243,26 @@ export default async function ProjectPage({
           </div>
         </section>
 
-        <section className="grid gap-4 xl:grid-cols-2">
-          <article className="surface-panel rounded-[1.75rem] p-6">
-            <p className="section-eyebrow">What I learned</p>
-            <ul className="mt-5 space-y-3">
-              {project.lessons.map((lesson) => (
-                <li
-                  key={lesson}
-                  className="rounded-[1.15rem] border border-[var(--border)] bg-[var(--background-strong)] px-4 py-3 text-sm leading-7 text-[var(--foreground-soft)]"
-                >
-                  {lesson}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="surface-panel rounded-[1.75rem] p-6">
-            <p className="section-eyebrow">Build notes</p>
-            <ul className="mt-5 space-y-3">
-              {project.buildNotes.map((note) => (
-                <li
-                  key={note}
-                  className="rounded-[1.15rem] border border-[var(--border)] bg-[var(--background-strong)] px-4 py-3 text-sm leading-7 text-[var(--foreground-soft)]"
-                >
-                  {note}
-                </li>
-              ))}
-            </ul>
-          </article>
-        </section>
-
-        <section className="surface-panel-dark rounded-[2rem] px-6 py-8 sm:px-8">
+        <section className="rounded-lg border border-white/10 bg-[#0d0b0a] p-6 text-white sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="section-eyebrow !text-[rgba(232,165,94,0.85)]">
-                Next step
-              </p>
-              <h2 className="section-title mt-4 text-3xl font-semibold text-[var(--panel-dark-foreground)] sm:text-4xl">
-                {project.closingHeading ??
-                  `${project.title} is the kind of product work I want more of in my portfolio.`}
+              <p className="font-mono text-xs uppercase text-[#e8a55e]">Next step</p>
+              <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-none text-[#fff7ea]">
+                {project.closingHeading}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68">
-                {project.closingCopy ??
-                  "If this kind of product thinking and implementation range is useful to your team, I'd love to connect."}
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/62">
+                {project.closingCopy}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Link href="/#contact" className="primary-button">
-                Get in touch
+              <a href={`mailto:${site.email}`} className="primary-button">
+                <Mail className="h-4 w-4" />
+                Contact
+              </a>
+              <Link href="/#work" className="secondary-button !border-white/12 !bg-white/6 !text-white">
+                More work
+                <ArrowRight className="h-4 w-4" />
               </Link>
-              {repoLink ? (
-                <a
-                  href={repoLink.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="secondary-button !border-white/10 !bg-white/4 !text-white/80 hover:!text-white"
-                >
-                  {repoLink.label}
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              ) : null}
             </div>
           </div>
         </section>

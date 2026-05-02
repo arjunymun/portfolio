@@ -6,7 +6,7 @@ export function ThemeToggle() {
   return (
     <button
       aria-label="Toggle color theme"
-      className="secondary-button !h-11 !w-11 !p-0"
+      className="secondary-button !h-11 !w-11 !border-white/10 !bg-white/8 !p-0 !text-white hover:!text-[#e8a55e]"
       onClick={() => {
         const root = document.documentElement;
         const nextIsDark = !root.classList.contains("dark");
