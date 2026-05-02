@@ -18,9 +18,9 @@ function formatDate(date: string) {
 
 export function BlogCard({ slug, meta }: BlogCardProps) {
   return (
-    <article className="project-card surface-panel rounded-[1.5rem] p-6">
-      <p className="section-eyebrow">Writing note</p>
-      <h3 className="section-title mt-4 text-2xl font-semibold text-[var(--foreground)]">
+    <article className="project-card surface-panel rounded-lg p-6">
+      <p className="font-mono text-[0.68rem] uppercase text-[var(--warm)]">Writing note</p>
+      <h3 className="mt-4 font-display text-2xl font-semibold leading-tight text-[var(--foreground)]">
         {meta.title}
       </h3>
       {meta.date ? (

@@ -38,7 +38,7 @@ export function CinematicHero() {
       <div className="spectral-code opacity-70" aria-hidden />
 
       <motion.div
-        className="pointer-events-none absolute inset-y-10 right-[-9rem] hidden w-[56rem] max-w-[62vw] items-center justify-center lg:flex"
+        className="pointer-events-none absolute inset-y-10 right-[-18rem] hidden w-[58rem] max-w-[56vw] items-center justify-center xl:right-[-11rem] 2xl:right-[-7rem] lg:flex"
         style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 1300 }}
         aria-hidden
       >
@@ -91,7 +91,7 @@ export function CinematicHero() {
       </motion.div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-between px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
-        <div className="max-w-5xl pt-12 sm:pt-16 lg:pt-20">
+        <div className="max-w-4xl pt-12 sm:pt-16 lg:max-w-3xl lg:pt-20 xl:max-w-4xl">
           <motion.p
             className="font-mono text-xs uppercase text-[#e8a55e]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
@@ -101,7 +101,7 @@ export function CinematicHero() {
             {cinemaHero.eyebrow}
           </motion.p>
           <motion.h1
-            className="mt-5 max-w-5xl font-display text-5xl font-semibold leading-[0.96] text-[#fff7ea] sm:text-7xl lg:text-8xl"
+            className="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[0.96] text-[#fff7ea] sm:text-7xl lg:text-[5.8rem] xl:text-8xl"
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
