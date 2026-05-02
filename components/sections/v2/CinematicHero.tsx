@@ -55,6 +55,7 @@ export function CinematicHero() {
                 width={sideout.image.width}
                 height={sideout.image.height}
                 className="h-[34rem] w-full rounded-md object-cover object-top opacity-95"
+                loading="eager"
               />
             ) : null}
           </motion.figure>

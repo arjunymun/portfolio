@@ -21,14 +21,26 @@ const ProductUniverseCanvas = dynamic(
   },
 );
 
+let cachedProductWebglSupport: boolean | null = null;
+
 function hasWebglSupport() {
+  if (cachedProductWebglSupport !== null) {
+    return cachedProductWebglSupport;
+  }
+
   try {
     const canvas = document.createElement("canvas");
-    return Boolean(
+    const context =
       window.WebGLRenderingContext &&
-        (canvas.getContext("webgl") || canvas.getContext("experimental-webgl")),
-    );
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"));
+    cachedProductWebglSupport = Boolean(context);
+    if (context && "getExtension" in context) {
+      context.getExtension("WEBGL_lose_context")?.loseContext();
+    }
+
+    return cachedProductWebglSupport;
   } catch {
+    cachedProductWebglSupport = false;
     return false;
   }
 }

@@ -4,8 +4,39 @@ import { Line, Stars, Text } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import { useReducedMotion } from "framer-motion";
-import { Suspense, useMemo, useRef, useSyncExternalStore } from "react";
+import { Component, Suspense, useMemo, useRef, useSyncExternalStore } from "react";
+import type { ReactNode } from "react";
 import * as THREE from "three";
+
+interface BackdropErrorBoundaryProps {
+  children: ReactNode;
+  fallback: ReactNode;
+}
+
+interface BackdropErrorBoundaryState {
+  hasError: boolean;
+}
+
+let cachedWebGLSupport: boolean | null = null;
+
+class BackdropErrorBoundary extends Component<
+  BackdropErrorBoundaryProps,
+  BackdropErrorBoundaryState
+> {
+  state: BackdropErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): BackdropErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
 
 function subscribe() {
   return () => {};
@@ -30,8 +61,16 @@ function getWebGLSnapshot() {
     return false;
   }
 
+  if (cachedWebGLSupport !== null) {
+    return cachedWebGLSupport;
+  }
+
   const canvas = document.createElement("canvas");
-  return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  const context = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
+  cachedWebGLSupport = Boolean(context);
+  context?.getExtension("WEBGL_lose_context")?.loseContext();
+
+  return cachedWebGLSupport;
 }
 
 function getServerSnapshot() {
@@ -538,27 +577,31 @@ export function CosmicBackdrop() {
 
   return (
     <div className="cosmic-backdrop" aria-hidden>
-      <Canvas
-        camera={{ position: [0, 0, 5.8], fov: 46 }}
-        dpr={[1, 1.35]}
-        gl={{
-          alpha: true,
-          antialias: true,
-          powerPreference: "high-performance",
-          preserveDrawingBuffer: true,
-        }}
+      <BackdropErrorBoundary
+        fallback={<div className="cosmic-backdrop cosmic-backdrop-fallback" aria-hidden />}
       >
-        <ambientLight intensity={0.36} />
-        <pointLight position={[1.8, 2.4, 1.6]} intensity={2.6} color="#9af5ed" />
-        <pointLight position={[-2.4, -1.4, 1.8]} intensity={1.8} color="#ffd29a" />
-        <Suspense fallback={null}>
-          <CosmicScene reduceMotion={prefersReducedMotion} scrollProgress={scrollProgress} />
-        </Suspense>
-        <EffectComposer multisampling={0}>
-          <Bloom intensity={0.62} luminanceThreshold={0.08} luminanceSmoothing={0.6} />
-          <Vignette eskil={false} offset={0.08} darkness={0.78} />
-        </EffectComposer>
-      </Canvas>
+        <Canvas
+          camera={{ position: [0, 0, 5.8], fov: 46 }}
+          dpr={[1, 1.35]}
+          fallback={<div className="cosmic-backdrop cosmic-backdrop-fallback" aria-hidden />}
+          gl={{
+            alpha: true,
+            antialias: true,
+            powerPreference: "high-performance",
+          }}
+        >
+          <ambientLight intensity={0.36} />
+          <pointLight position={[1.8, 2.4, 1.6]} intensity={2.6} color="#9af5ed" />
+          <pointLight position={[-2.4, -1.4, 1.8]} intensity={1.8} color="#ffd29a" />
+          <Suspense fallback={null}>
+            <CosmicScene reduceMotion={prefersReducedMotion} scrollProgress={scrollProgress} />
+          </Suspense>
+          <EffectComposer multisampling={0}>
+            <Bloom intensity={0.62} luminanceThreshold={0.08} luminanceSmoothing={0.6} />
+            <Vignette eskil={false} offset={0.08} darkness={0.78} />
+          </EffectComposer>
+        </Canvas>
+      </BackdropErrorBoundary>
     </div>
   );
 }
