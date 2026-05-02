@@ -10,6 +10,13 @@ export interface SocialLink {
   external?: boolean;
 }
 
+export interface ResumeLink {
+  label: string;
+  href: string;
+  external: boolean;
+  downloadName?: string;
+}
+
 export interface SiteConfig {
   name: string;
   shortName: string;
@@ -20,6 +27,7 @@ export interface SiteConfig {
   email: string;
   github: string;
   description: string;
+  resume: ResumeLink;
   navigation: NavItem[];
   socialLinks: SocialLink[];
   seo: {
@@ -31,6 +39,9 @@ export interface SiteConfig {
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
+const configuredResumeUrl = process.env.NEXT_PUBLIC_RESUME_URL?.trim();
+const resumeHref = configuredResumeUrl || "/resume.pdf";
+const resumeIsExternal = /^https?:\/\//.test(resumeHref);
 
 export const site: SiteConfig = {
   name: "Arjun Yadav",
@@ -43,11 +54,16 @@ export const site: SiteConfig = {
   email: "arjuny@mun.ca",
   github: "https://github.com/arjunymun",
   description:
-    "Portfolio of Arjun Yadav, a full-stack developer building product-shaped web apps across real-world operations software, practical AI workflows, and strong case-study storytelling.",
+    "Portfolio of Arjun Yadav, a full-stack developer building cinematic product systems across real-world operations software, practical AI workflows, and case-study storytelling.",
+  resume: {
+    label: "Download resume",
+    href: resumeHref,
+    external: resumeIsExternal,
+    downloadName: resumeIsExternal ? undefined : "Arjun-Yadav-Resume.pdf",
+  },
   navigation: [
-    { label: "Home", href: "/" },
     { label: "Work", href: "/#work" },
-    { label: "Sideout", href: "/projects/sideout" },
+    { label: "Universe", href: "/#universe" },
     { label: "Writing", href: "/blog" },
     { label: "Contact", href: "/#contact" },
   ],
@@ -63,7 +79,7 @@ export const site: SiteConfig = {
   seo: {
     title: "Arjun Yadav | Full-stack Developer",
     description:
-      "Editorial portfolio and case-study site for Arjun Yadav, featuring Sideout and DraftLens: two flagship products spanning venue operations software, customer retention systems, and trust-first AI workflows.",
+      "Cinematic product portfolio for Arjun Yadav, featuring Sideout and DraftLens: two flagship full-stack products spanning venue operations software, customer retention systems, and trust-first AI workflows.",
     keywords: [
       "Arjun Yadav",
       "full-stack developer",
