@@ -486,6 +486,11 @@ export const projects: ProjectSummary[] = [
     links: [
       { label: "Read case study", href: "/projects/draftlens" },
       {
+        label: "Visit live product",
+        href: "https://essay-feedback-app.vercel.app/",
+        external: true,
+      },
+      {
         label: "View repo",
         href: "https://github.com/arjunymun/essay-feedback-app",
         external: true,
@@ -769,7 +774,7 @@ export const caseStudies: ProjectCaseStudy[] = [
     ],
     screenshots: [draftLensLanding, draftLensDashboard, draftLensReport],
     availabilityNote:
-      "The hosted demo is being refreshed, so the repo, case study, and screenshots are the clearest public references right now.",
+      "The hosted product is live, so this case study can point to a working app alongside the repo and screenshots.",
     screenshotIntro:
       "I wanted the case study to show the product where the work is easiest to judge: positioning, the workspace, and the actual report UI.",
     closingHeading:
