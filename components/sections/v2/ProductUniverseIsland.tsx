@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useReducedMotion } from "framer-motion";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import type { UniverseNode } from "@/lib/content";
 
@@ -67,8 +67,38 @@ function UniverseFallback({ label, nodes }: { label: string; nodes: UniverseNode
   );
 }
 
+// This section sits below the fold; dynamic() still downloads and boots the
+// Three.js chunk on initial render, so only mount the canvas once the shell
+// is close to entering the viewport.
+function useInView<T extends Element>(rootMargin = "200px") {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || inView) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [inView, rootMargin]);
+
+  return { ref, inView };
+}
+
 export function ProductUniverseIsland({ nodes }: ProductUniverseIslandProps) {
   const reduceMotion = useReducedMotion();
+  const { ref, inView } = useInView<HTMLDivElement>();
   const canUseWebgl = useSyncExternalStore(
     () => () => {},
     hasWebglSupport,
@@ -80,8 +110,12 @@ export function ProductUniverseIsland({ nodes }: ProductUniverseIslandProps) {
   }
 
   return (
-    <div className="h-[32rem] overflow-hidden rounded-lg border border-white/10 bg-[#0d0b0a] sm:h-[40rem] lg:h-[46rem]">
-      <ProductUniverseCanvas nodes={nodes} />
+    <div
+      ref={ref}
+      className="universe-canvas-shell relative h-[32rem] overflow-hidden rounded-lg border border-white/10 bg-[#0d0b0a] sm:h-[40rem] lg:h-[46rem]"
+    >
+      <div className="universe-canvas-underlay" aria-hidden />
+      {inView ? <ProductUniverseCanvas nodes={nodes} /> : null}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist_Mono, Syne } from "next/font/google";
 
-import { CosmicBackdrop } from "@/components/layout/CosmicBackdrop";
+import { CosmicBackdropIsland } from "@/components/layout/CosmicBackdropIsland";
 import { Footer } from "@/components/layout/Footer";
 import { Nav } from "@/components/layout/Nav";
 import { site } from "@/lib/site";
@@ -81,7 +81,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <div className="site-frame">
-          <CosmicBackdrop />
+          <CosmicBackdropIsland />
           <Nav />
           <div id="main-content" className="relative">
             {children}

@@ -39,27 +39,50 @@ function DataNode({
   index: number;
 }) {
   const tone = toneMap[node.tone];
+  const isFlagship = index < 2;
 
   return (
-    <Float speed={1.2 + index * 0.12} rotationIntensity={0.25} floatIntensity={0.42}>
+    <Float speed={1.05 + index * 0.11} rotationIntensity={0.18} floatIntensity={0.34}>
       <group position={position}>
+        <mesh position={[0, -0.02, -0.02]} rotation={[0.08, index % 2 ? 0.22 : -0.22, 0]}>
+          <boxGeometry args={[isFlagship ? 0.72 : 0.54, 0.03, isFlagship ? 0.42 : 0.32]} />
+          <meshStandardMaterial
+            color="#14120f"
+            emissive={tone.color}
+            emissiveIntensity={isFlagship ? 0.22 : 0.13}
+            metalness={0.72}
+            roughness={0.24}
+            transparent
+            opacity={0.92}
+          />
+        </mesh>
         <mesh>
-          <sphereGeometry args={[0.2, 48, 48]} />
+          <sphereGeometry args={[isFlagship ? 0.23 : 0.17, 48, 48]} />
           <meshStandardMaterial
             color={tone.color}
             emissive={tone.glow}
-            emissiveIntensity={0.78}
+            emissiveIntensity={isFlagship ? 0.9 : 0.7}
             metalness={0.48}
             roughness={0.22}
           />
         </mesh>
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.34, 0.008, 10, 96]} />
-          <meshBasicMaterial color={tone.glow} transparent opacity={0.42} />
+          <torusGeometry args={[isFlagship ? 0.45 : 0.32, 0.008, 10, 112]} />
+          <meshBasicMaterial color={tone.glow} transparent opacity={isFlagship ? 0.52 : 0.36} />
+        </mesh>
+        <mesh rotation={[1.28, 0.18, index * 0.38]}>
+          <torusGeometry args={[isFlagship ? 0.62 : 0.43, 0.004, 8, 112]} />
+          <meshBasicMaterial
+            blending={THREE.AdditiveBlending}
+            color={tone.glow}
+            depthWrite={false}
+            transparent
+            opacity={isFlagship ? 0.26 : 0.14}
+          />
         </mesh>
         <Text
-          position={[0, -0.48, 0]}
-          fontSize={0.14}
+          position={[0, isFlagship ? -0.55 : -0.48, 0]}
+          fontSize={isFlagship ? 0.155 : 0.13}
           anchorX="center"
           anchorY="middle"
           color="#fff7ea"
@@ -84,7 +107,7 @@ function DataNode({
 
 function SingularityCore() {
   const core = useRef<THREE.Group>(null);
-  const glyphs = ["type", "λ", "Σ", "0x", "io"];
+  const glyphs = ["type", "fn", "sum", "0x", "io"];
 
   useFrame(({ clock }) => {
     if (!core.current) {
@@ -171,6 +194,79 @@ function SingularityCore() {
           </Text>
         );
       })}
+    </group>
+  );
+}
+
+function CinematicRig() {
+  const rig = useRef<THREE.Group>(null);
+  const lightSweep = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, laneIndex) => {
+        const points: Array<[number, number, number]> = [];
+        const y = -1.55 + laneIndex * 0.42;
+
+        for (let step = 0; step <= 120; step += 1) {
+          const progress = step / 120;
+          points.push([
+            -3.6 + progress * 7.2,
+            y + Math.sin(progress * Math.PI * 2 + laneIndex * 0.6) * 0.06,
+            -1.9 + Math.cos(progress * Math.PI + laneIndex) * 0.34,
+          ]);
+        }
+
+        return {
+          color: laneIndex % 2 === 0 ? "#9af5ed" : "#ffd29a",
+          points,
+        };
+      }),
+    [],
+  );
+
+  useFrame(({ clock }) => {
+    if (!rig.current) {
+      return;
+    }
+
+    const elapsed = clock.getElapsedTime();
+    rig.current.rotation.z = Math.sin(elapsed * 0.08) * 0.035;
+    rig.current.position.y = Math.cos(elapsed * 0.12) * 0.05;
+  });
+
+  return (
+    <group ref={rig} position={[0, -0.05, -0.2]} rotation={[0.04, -0.14, 0]}>
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -1.34, -0.06]}>
+        <ringGeometry args={[1.04, 2.92, 192]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#45b7ad"
+          depthWrite={false}
+          side={THREE.DoubleSide}
+          transparent
+          opacity={0.055}
+        />
+      </mesh>
+      <mesh rotation={[1.16, 0.1, 0.42]} position={[0, -0.04, -0.42]}>
+        <ringGeometry args={[1.82, 3.44, 192]} />
+        <meshBasicMaterial
+          blending={THREE.AdditiveBlending}
+          color="#e8a55e"
+          depthWrite={false}
+          side={THREE.DoubleSide}
+          transparent
+          opacity={0.035}
+        />
+      </mesh>
+      {lightSweep.map((lane, index) => (
+        <Line
+          key={index}
+          points={lane.points}
+          color={lane.color}
+          lineWidth={index % 3 === 0 ? 1.1 : 0.68}
+          transparent
+          opacity={0.09 + (index % 3) * 0.03}
+        />
+      ))}
     </group>
   );
 }
@@ -264,12 +360,15 @@ export function ProductUniverseCanvas({ nodes }: ProductUniverseCanvasProps) {
         powerPreference: "high-performance",
         preserveDrawingBuffer: true,
       }}
+      onCreated={({ gl }) => {
+        gl.setClearColor("#000000", 0);
+      }}
     >
-      <color attach="background" args={["#0d0b0a"]} />
       <ambientLight intensity={0.92} />
       <pointLight position={[2.4, 3.2, 3.2]} intensity={4.8} color="#45b7ad" />
       <pointLight position={[-3.2, -2.2, 2.4]} intensity={2.6} color="#e8a55e" />
       <Stars radius={7} depth={3} count={460} factor={2.8} saturation={0} fade speed={0.45} />
+      <CinematicRig />
       <Suspense fallback={null}>
         <ProductGraph nodes={nodes} />
       </Suspense>

@@ -7,6 +7,7 @@ import { ArrowDown, ArrowRight, Download, Github } from "lucide-react";
 
 import { cinemaHero, homepageFlagships } from "@/lib/content";
 import { site } from "@/lib/site";
+import { HeroSignalField } from "@/components/sections/v2/HeroSignalField";
 
 const [sideout, draftLens] = homepageFlagships;
 
@@ -38,13 +39,20 @@ export function CinematicHero() {
       <div className="spectral-code opacity-70" aria-hidden />
 
       <motion.div
-        className="pointer-events-none absolute inset-y-10 right-[-18rem] hidden w-[58rem] max-w-[56vw] items-center justify-center xl:right-[-11rem] 2xl:right-[-7rem] lg:flex"
+        className="pointer-events-none absolute inset-y-10 right-[-24rem] hidden w-[58rem] max-w-[52vw] items-center justify-center xl:right-[-18rem] 2xl:right-[-13rem] lg:flex"
         style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 1300 }}
         aria-hidden
       >
         <div className="relative h-[42rem] w-full">
+          <div
+            className="absolute inset-y-[-4rem] left-[-5rem] right-[-2rem] z-0 opacity-95"
+            aria-hidden
+          >
+            <HeroSignalField />
+          </div>
+
           <motion.figure
-            className="absolute right-10 top-4 w-[30rem] overflow-hidden rounded-lg border border-white/12 bg-white/8 p-2 shadow-[0_40px_140px_rgba(0,0,0,0.56)] backdrop-blur"
+            className="absolute right-10 top-4 z-20 w-[30rem] overflow-hidden rounded-lg border border-white/12 bg-white/8 p-2 shadow-[0_40px_140px_rgba(0,0,0,0.56)] backdrop-blur"
             animate={reduceMotion ? undefined : { y: [0, -18, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -61,7 +69,7 @@ export function CinematicHero() {
           </motion.figure>
 
           <motion.figure
-            className="absolute left-0 top-24 w-[25rem] overflow-hidden rounded-lg border border-[#e8a55e]/30 bg-[#251713]/85 p-2 shadow-[0_36px_120px_rgba(232,165,94,0.18)] backdrop-blur"
+            className="absolute left-0 top-24 z-20 w-[25rem] overflow-hidden rounded-lg border border-[#e8a55e]/30 bg-[#251713]/85 p-2 shadow-[0_36px_120px_rgba(232,165,94,0.18)] backdrop-blur"
             animate={reduceMotion ? undefined : { y: [0, 16, 0] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
           >
@@ -77,7 +85,7 @@ export function CinematicHero() {
           </motion.figure>
 
           <motion.div
-            className="absolute bottom-8 left-24 grid w-[24rem] grid-cols-2 gap-2 rounded-lg border border-white/12 bg-[#101614]/88 p-3 font-mono text-[0.68rem] uppercase text-white/70 shadow-[0_26px_90px_rgba(69,183,173,0.14)] backdrop-blur"
+            className="absolute bottom-8 left-24 z-30 grid w-[24rem] grid-cols-2 gap-2 rounded-lg border border-white/12 bg-[#101614]/88 p-3 font-mono text-[0.68rem] uppercase text-white/70 shadow-[0_26px_90px_rgba(69,183,173,0.14)] backdrop-blur"
             animate={reduceMotion ? undefined : { x: [0, 14, 0] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -90,8 +98,8 @@ export function CinematicHero() {
         </div>
       </motion.div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-between px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
-        <div className="max-w-4xl pt-12 sm:pt-16 lg:max-w-3xl lg:pt-20 xl:max-w-4xl">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-between px-5 py-9 sm:px-8 sm:py-16 lg:px-10">
+        <div className="max-w-4xl pt-8 sm:pt-16 lg:max-w-3xl lg:pt-20 xl:max-w-4xl">
           <motion.p
             className="font-mono text-xs uppercase text-[#e8a55e]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
@@ -101,7 +109,7 @@ export function CinematicHero() {
             {cinemaHero.eyebrow}
           </motion.p>
           <motion.h1
-            className="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[0.96] text-[#fff7ea] sm:text-7xl lg:text-[5.8rem] xl:text-8xl"
+            className="mt-4 max-w-4xl font-display text-[2.85rem] font-semibold leading-[0.95] text-[#fff7ea] sm:mt-5 sm:text-7xl sm:leading-[0.96] lg:text-[5.8rem] xl:text-8xl"
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -109,7 +117,7 @@ export function CinematicHero() {
             {cinemaHero.title}
           </motion.h1>
           <motion.p
-            className="mt-6 max-w-2xl text-lg leading-8 text-white/76 sm:text-xl"
+            className="mt-5 max-w-2xl text-base leading-7 text-white/76 sm:mt-6 sm:text-xl sm:leading-8"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.18 }}
