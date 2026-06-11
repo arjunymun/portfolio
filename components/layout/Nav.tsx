@@ -23,7 +23,7 @@ export function Nav() {
               <p className="truncate font-display text-sm font-semibold text-white sm:text-base">
                 {site.name}
               </p>
-              <p className="truncate text-[11px] text-white/48 sm:text-xs">
+              <p className="truncate text-[11px] text-white/60 sm:text-xs">
                 {site.role}
               </p>
             </div>
@@ -38,14 +38,14 @@ export function Nav() {
                       href={item.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-md px-3 py-2 text-sm text-white/62 transition hover:bg-white/8 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm text-white/78 transition hover:bg-white/8 hover:text-white"
                     >
                       {item.label}
                     </a>
                   ) : (
                     <Link
                       href={item.href}
-                      className="rounded-md px-3 py-2 text-sm text-white/62 transition hover:bg-white/8 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm text-white/78 transition hover:bg-white/8 hover:text-white"
                     >
                       {item.label}
                     </Link>
@@ -75,7 +75,7 @@ export function Nav() {
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-[11px] font-medium text-white/62 transition hover:text-white"
+                className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-xs font-medium text-white/78 transition hover:text-white"
               >
                 {item.label}
               </a>
@@ -83,7 +83,7 @@ export function Nav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-[11px] font-medium text-white/62 transition hover:text-white"
+                className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-xs font-medium text-white/78 transition hover:text-white"
               >
                 {item.label}
               </Link>
@@ -94,7 +94,7 @@ export function Nav() {
             target={site.resume.external ? "_blank" : undefined}
             rel={site.resume.external ? "noreferrer" : undefined}
             download={site.resume.external ? undefined : site.resume.downloadName}
-            className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-[11px] font-medium text-white/62 transition hover:text-white"
+            className="shrink-0 rounded-md border border-white/10 bg-white/8 px-2.5 py-1.5 text-xs font-medium text-white/78 transition hover:text-white"
           >
             Resume
           </a>
